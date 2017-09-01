@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/layoutBackgroundColorBlack"
+    tools:context="suman.dev.strocks.LoginOptions">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:scaleType="fitCenter"
+        android:background="@color/backgroundColor"
+        android:src="@drawable/logo"/>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="150dp"
+        android:padding="20dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Welcome to"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/SubHeadingFontSize" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ST Rocks School"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/HeadingFontSize" />
+
+        <Button
+            android:id="@+id/btnLoginAsAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="Login as Administrator"
+            android:textStyle="normal"
+            android:textAllCaps="false"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/white"
+            android:textSize="@dimen/TextBoxFontSize"
+            android:layout_marginTop="30dp"/>
+
+        <Button
+            android:id="@+id/btnLoginAsPrinciple"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="Login as Principle"
+            android:textStyle="normal"
+            android:textAllCaps="false"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/white"
+            android:textSize="@dimen/TextBoxFontSize"
+            android:layout_marginTop="5dp"/>
+
+        <Button
+            android:id="@+id/btnLoginAsTeacher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="Login as Teacher"
+            android:textStyle="normal"
+            android:textAllCaps="false"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/white"
+            android:textSize="@dimen/TextBoxFontSize"
+            android:layout_marginTop="5dp"/>
+
+        <Button
+            android:id="@+id/btnLoginAsStudent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="Login as Student"
+            android:textStyle="normal"
+            android:textAllCaps="false"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/white"
+            android:textSize="@dimen/TextBoxFontSize"
+            android:layout_marginTop="5dp"/>
+
+        <Button
+            android:id="@+id/btnLoginAsParents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="Login as Parents"
+            android:textStyle="normal"
+            android:textAllCaps="false"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/white"
+            android:textSize="@dimen/TextBoxFontSize"
+            android:layout_marginTop="5dp"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

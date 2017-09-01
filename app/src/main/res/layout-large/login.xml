@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:background="@color/layoutBackgroundColorBlack">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:scaleType="fitCenter"
+        android:background="@color/backgroundColor"
+        android:src="@drawable/logo"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Welcome to"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/SubHeadingFontSize" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ST Rocks School"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/HeadingFontSize" />
+
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dp"
+                android:padding="30dp">
+
+                <TextView
+                    android:id="@+id/txtViewLoginType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Principle Login"
+                    android:textAlignment="center"
+                    android:textColor="@color/yellow"
+                    android:textSize="@dimen/LabelFontSize" />
+
+                <EditText
+                    android:id="@+id/txtUserName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/rounded_edittext"
+                    android:ems="10"
+                    android:hint="Username"
+                    android:text="parent3@example.com"
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:textSize="@dimen/TextBoxFontSize"
+                    android:layout_below="@+id/txtViewLoginType"/>
+
+                <EditText
+                    android:id="@+id/txtPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/rounded_edittext"
+                    android:ems="10"
+                    android:hint="Password"
+                    android:text="password"
+                    android:inputType="textPassword"
+                    android:padding="10dp"
+                    android:textSize="@dimen/TextBoxFontSize"
+                    android:layout_below="@+id/txtUserName"/>
+
+
+                <Button
+                    android:id="@+id/btnLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/rounded_button"
+                    android:text="Login"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textStyle="normal"
+                    android:textSize="@dimen/ButtonFontSize"
+                    android:layout_below="@+id/txtPassword"/>
+            </RelativeLayout>
+        </ScrollView>
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:text="Create New Post"
+        android:textColor="@color/black"
+        android:textSize="@dimen/HeadingFontSize"
+        android:id="@+id/header"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:id="@+id/divider"
+        android:layout_below="@id/header"
+        android:background="@color/gray"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="Enter text here"
+        android:gravity="top"
+        android:textSize="@dimen/LabelFontSize"
+        android:layout_weight="0"
+        android:id="@+id/txtPta"
+        android:layout_below="@id/divider"
+        android:layout_above="@+id/btnSave"/>
+
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Save"
+        android:background="@drawable/rounded_button_red"
+        android:textColor="@color/white"
+        android:textSize="@dimen/ButtonFontSize"
+        android:layout_gravity="center_horizontal|center"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"/>
+
+</RelativeLayout>

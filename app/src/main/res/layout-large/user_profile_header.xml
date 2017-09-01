@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/gray">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="2dp">
+        <ImageView
+            android:id="@+id/profilePicture"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/profile"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Welcome"
+                android:padding="2dp"
+                android:textSize="@dimen/LabelFontSize"
+                android:textColor="@color/black"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="You are a"
+                android:padding="2dp"
+                android:textSize="@dimen/LabelFontSize"
+                android:textColor="@color/black"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Session"
+                android:padding="2dp"
+                android:textSize="@dimen/LabelFontSize"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/txtLastLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Last Login"
+                android:padding="3dp"
+                android:textSize="@dimen/LabelFontSize"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center">
+            <TextView
+                android:id="@+id/lblName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:textStyle="bold"
+                android:padding="2dp"
+                android:textSize="@dimen/LabelFontSize"
+                android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/lblOccupation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Occupation"
+                android:textStyle="bold"
+                android:padding="2dp"
+                android:textSize="@dimen/LabelFontSize"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/lblSession"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Session"
+                android:textStyle="bold"
+                android:padding="2dp"
+                android:textSize="@dimen/LabelFontSize"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/lblLastLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Last Login"
+                android:textStyle="bold"
+                android:padding="3dp"
+                android:textSize="@dimen/LabelFontSize"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

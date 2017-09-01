@@ -1,0 +1,116 @@
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="30dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    card_view:cardBackgroundColor="@color/yellow">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="160dp"
+            android:layout_height="65dp"
+            android:text="Student Name"
+            android:textAlignment="center"
+            android:background="@color/black"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:padding="5dp"
+            android:gravity="center"
+            android:textSize="@dimen/ListHeaderFontSize"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:text="Class Name"
+            android:textAlignment="center"
+            android:background="@color/light_black"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:padding="5dp"
+            android:gravity="center"
+            android:textSize="@dimen/ListHeaderFontSize"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="65dp">
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:text="Stack Overflow is a community of 7.5 million programmers, just like you, helping each other.Join them; it only takes a minute:"
+                    android:id="@+id/txtViewComment"
+                    android:textSize="@dimen/LabelFontSize"
+                    android:layout_span="3"
+                    android:layout_weight="1"/>
+            </TableRow>
+
+            <TableRow
+                android:background="@color/white">
+                <TextView
+                    android:id="@+id/txtViewLikes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_weight=".2"
+                    android:textSize="@dimen/LabelFontSize"
+                    android:text="Likes(30)"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:background="@color/red"
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:textAlignment="center"/>
+                <TextView
+                    android:id="@+id/txtViewCommentCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_weight=".3"
+                    android:text="Comments(30)"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:background="@color/red"
+                    android:layout_marginLeft="1dp"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/LabelFontSize"
+                    android:clickable="true"
+                    android:textAlignment="center"/>
+                <TextView
+                    android:id="@+id/txtViewPostedTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_weight=".2"
+                    android:text="2 hours"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:background="@color/red"
+                    android:layout_marginLeft="1dp"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/LabelFontSize"
+                    android:textAlignment="center"/>
+            </TableRow>
+        </TableLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/txtViewLoginType">
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

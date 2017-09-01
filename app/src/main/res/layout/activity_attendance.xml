@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="suman.dev.strocks.AttendanceActivity">
+
+    <include layout="@layout/toolbar"/>
+    <include
+        android:id="@+id/result_userProfileHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/user_profile_header"/>
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/content_toolbar"/>
+
+    <LinearLayout
+        android:id="@+id/attandanceGraph"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="This Month Overall Attendance"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="@dimen/SubHeadingFontSize"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/result_pieChart"
+                    android:layout_width="250dp"
+                    android:layout_height="180dp">
+                </com.github.mikephil.charting.charts.PieChart>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center|right">
+                    <TextView
+                        android:id="@+id/present"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Percent: 0"
+                        android:textColor="@color/light_black"
+                        android:padding="10dp"
+                        android:textSize="@dimen/LabelFontSize"/>
+
+                    <TextView
+                        android:id="@+id/absent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Absent: 0"
+                        android:padding="10dp"
+                        android:textColor="@color/light_black"
+                        android:textSize="@dimen/LabelFontSize"/>
+                </LinearLayout>
+            </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/viewStudenList"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+            <Spinner
+                android:id="@+id/ddlClass"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:padding="10dp">
+            </Spinner>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/ddlClass"
+                android:layout_above="@+id/btnPostAttendance">
+            </android.support.v7.widget.RecyclerView>
+
+            <Button
+                android:id="@+id/btnPostAttendance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Post Attendance"
+                android:background="@drawable/rounded_button_red"
+                android:textColor="@color/white"
+                android:textSize="@dimen/ButtonFontSize"
+                android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+</LinearLayout>

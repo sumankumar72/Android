@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    tools:context="suman.dev.strocks.HomeworkCompleteActivity">
+
+    <include layout="@layout/toolbar"/>
+    <include
+        android:id="@+id/homework_complete_userProfileHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/user_profile_header"/>
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/content_toolbar"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:stretchColumns="*"
+                android:weightSum="2">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="Subject Name"
+                        android:textSize="@dimen/LabelFontSize"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/homework_complete_lblSubjectName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text=""
+                        android:textSize="@dimen/LabelFontSize"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"/>
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:text="Faculty Name:"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:textSize="@dimen/LabelFontSize"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/homework_complete_facultyName"
+                        android:text=""
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:textSize="@dimen/LabelFontSize"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"/>
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="Submission Date:"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:textSize="@dimen/LabelFontSize"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/homework_complete_submissionDate"
+                        android:text=""
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:textSize="@dimen/LabelFontSize"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"/>
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent">
+
+                    <TextView
+                        android:text="Faculty Notes:"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:textSize="@dimen/LabelFontSize"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/homework_complete_facultyNotes"
+                        android:text=""
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:textSize="@dimen/LabelFontSize"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"/>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="Upload Docs:"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:textSize="@dimen/LabelFontSize"
+                        android:textColor="@color/black"/>
+
+
+                    <Button
+                        android:id="@+id/homework_complete_btnupload"
+                        android:layout_height="60dp"
+                        android:layout_width="wrap_content"
+                        android:text="Upload"
+                        android:textAllCaps="false"
+                        android:textColor="@color/yellow"
+                        android:textSize="@dimen/ButtonFontSize"
+                        android:layout_marginRight="50dp"
+                        android:background="@drawable/rounded_button_red"
+                        android:layout_weight="1"/>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:text="Your Note:"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:textSize="@dimen/LabelFontSize"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"/>
+                </TableRow>
+                <TableRow android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp">
+                    <EditText
+                        android:id="@+id/txtStudentNote"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:hint="Write Your Note here..."
+                        android:background="@drawable/bordered_textbox"
+                        android:inputType="textMultiLine"
+                        android:layout_span="2"
+                        android:layout_weight="1"
+                        android:gravity="top|left"
+                        android:textSize="@dimen/TextBoxFontSize"
+                        android:padding="5dp"/>
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/btnSave"
+                        android:layout_height="70dp"
+                        android:layout_width="wrap_content"
+                        android:text="Submit"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/ButtonFontSize"
+                        android:background="@drawable/rounded_button_red"
+                        android:layout_span="2"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1"/>
+
+                </TableRow>
+            </TableLayout>
+
+        </ScrollView>
+    </RelativeLayout>
+
+
+</LinearLayout>

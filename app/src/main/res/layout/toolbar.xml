@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:background="@color/red">
+
+
+    <TextView
+        android:id="@+id/toolbar_title"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="ST Rocks"
+        android:paddingRight="20dp"
+        android:clickable="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/HeadingFontSize"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:gravity="center|start"
+        android:paddingLeft="5dp"/>
+</LinearLayout>

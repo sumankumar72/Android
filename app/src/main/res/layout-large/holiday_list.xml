@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="30dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginBottom="5dp"
+    card_view:cardBackgroundColor="@color/black">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="@color/yellow">
+        <TextView
+            android:id="@+id/holiday_list_date"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:text="Date"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:textSize="@dimen/ListItemFontSize"
+            android:textStyle="bold"
+            android:padding="15dp"/>
+
+        <TextView
+            android:id="@+id/holiday_list_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Holiday"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:textSize="@dimen/ListItemFontSize"
+            android:textStyle="bold"
+            android:padding="15dp"/>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">STRocks</string>
+    <string name="serviceError">An error has occured!!!</string>
+
+
+    <string-array name="months">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+
+
+    <string name="font_fontFamily_medium">sans-serif</string>
+    <string name="homework_created">Homework created successfully!!!</string>
+</resources>

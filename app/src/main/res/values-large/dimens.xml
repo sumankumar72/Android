@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="TextBoxFontSize">25dp</dimen>
+    <dimen name="ButtonFontSize">25dp</dimen>
+    <dimen name="HeadingFontSize">25dp</dimen>
+    <dimen name="SubHeadingFontSize">23dp</dimen>
+    <dimen name="LabelFontSize">20dp</dimen>
+    <dimen name="ListHeaderFontSize">22dp</dimen>
+    <dimen name="ListItemFontSize">20dp</dimen>
+</resources>

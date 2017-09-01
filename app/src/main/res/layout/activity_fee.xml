@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="suman.dev.strocks.FeeActivity">
+
+    <include layout="@layout/toolbar"/>
+    <include
+        android:id="@+id/fee_userProfileHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/user_profile_header"/>
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/content_toolbar"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your Dues"
+            android:textColor="@color/black"
+            android:textSize="@dimen/SubHeadingFontSize"
+            android:padding="10dp"/>
+
+
+        <Spinner
+            android:id="@+id/ddlMonth"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+        </Spinner>
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/feeRecycleView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:scrollbars="vertical"
+            android:layout_weight="1">
+        </android.support.v7.widget.RecyclerView>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/feeRecycleView">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Dues"
+                android:padding="15dp"
+                android:textStyle="bold"
+                android:layout_gravity="bottom"
+                android:textSize="@dimen/LabelFontSize"
+                android:layout_alignParentBottom="true"
+                android:textColor="@color/red"/>
+
+            <TextView
+                android:id="@+id/fee_TotalAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00.00"
+                android:padding="15dp"
+                android:textStyle="bold"
+                android:layout_gravity="bottom"
+                android:textSize="@dimen/LabelFontSize"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="100dp"
+                android:textColor="@color/red"/>
+
+             <Button
+                 android:id="@+id/fee_btnPayNow"
+                 android:layout_width="wrap_content"
+                 android:layout_height="40dp"
+                 android:textAllCaps="false"
+                 android:background="@drawable/rounded_button_red"
+                 android:textColor="@color/white"
+                 android:text="Pay Now"
+                 android:paddingLeft="20dp"
+                 android:paddingRight="20dp"
+                 android:textSize="@dimen/ButtonFontSize"
+                 android:layout_alignParentBottom="true"
+                 android:layout_alignParentRight="true" />
+        </RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3% GST Included"
+            android:paddingLeft="15dp"
+            android:textSize="@dimen/TextBoxFontSize"
+            android:textColor="@color/red"/>
+    </LinearLayout>
+</LinearLayout>

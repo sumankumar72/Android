@@ -1,0 +1,293 @@
+package suman.dev.strocks;
+
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.VolleyError;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.google.firebase.crash.FirebaseCrash;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import suman.dev.strocks.Adapters.AttandanceAdapter;
+import suman.dev.strocks.Constant.Const;
+import suman.dev.strocks.Model.ChildModel;
+import suman.dev.strocks.Model.ItemClickListener;
+import suman.dev.strocks.Model.StudentAttendance;
+import suman.dev.strocks.Model.UserClassData;
+import suman.dev.strocks.Model.UserProfile;
+import suman.dev.strocks.WebService.VolleyJsonArrayCallback;
+import suman.dev.strocks.WebService.VolleyJsonObjectCallback;
+import suman.dev.strocks.WebService.VolleyService;
+
+/**
+ * Created by suman on 27/7/17.
+ */
+
+public class AttendanceActivity extends AppCompatActivity {
+
+    private PieChart chart;
+    private TextView present, absent;
+    private VolleyService service = new VolleyService();
+    private StudentAttendance attendance;
+
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+    private AttandanceAdapter adapter;
+    private ArrayList<ChildModel> students;
+    private String classId;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_attendance);
+        UserProfileHeader profile = new UserProfileHeader(this, findViewById(R.id.result_userProfileHeader));
+        profile.loadProfile();
+
+        present = (TextView)findViewById(R.id.present);
+        absent = (TextView)findViewById(R.id.absent);
+
+        TextView content_title = (TextView)findViewById(R.id.content_toolbar_title);
+        content_title.setText("Attendance");
+        content_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.user_queue_black, 0, 0, 0);
+        if(!UserProfile.Role.toLowerCase().equals("teacher")) {
+            loadAttendance();
+        }
+        else
+        {
+            LinearLayout attandanceGraph = (LinearLayout)findViewById(R.id.attandanceGraph);
+            attandanceGraph.setVisibility(View.GONE);
+            RelativeLayout viewStudenList  = (RelativeLayout) findViewById(R.id.viewStudenList);
+            viewStudenList.setVisibility(View.VISIBLE);
+
+            recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
+            Spinner ddlClass =(Spinner)findViewById(R.id.ddlClass);
+            Button btnPostAttendance =(Button)findViewById(R.id.btnPostAttendance);
+            ArrayAdapter<UserClassData> spinerAdapter = new ArrayAdapter<UserClassData>(this, R.layout.support_simple_spinner_dropdown_item, UserProfile.Classes);
+            ddlClass.setAdapter(spinerAdapter);
+            try {
+                ddlClass.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        classId= UserProfile.Classes.get(position).Id + "";
+                        loadStudents();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+                btnPostAttendance.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        postAttendance();
+                    }
+                });
+
+            }
+            catch (Exception e){
+
+            }
+        }
+    }
+    private void postAttendance(){
+        if(students==null)
+        {
+            Toast.makeText(this, "Attendance not avaliable!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String presentStudent="";
+        String absentStudent="";
+        ArrayList<String> present= new ArrayList<>();
+        ArrayList<String> absent = new ArrayList<>();
+        for(ChildModel c: students){
+            if(c.IsPresent)
+                present.add(c.UserToken); //presentStudent=presentStudent+","+c.UserToken;
+            else
+               absent.add(c.UserToken); //absentStudent = absentStudent+","+c.UserToken;
+        }
+        //if(presentStudent.length()>1)
+//            presentStudent = presentStudent.substring(1);
+//        if(absentStudent.length()>1)
+//            absentStudent = absentStudent.substring(1);
+
+  //      presentStudent = "["+presentStudent+"]";
+    //    absentStudent = "["+absentStudent+"]";
+        //{"class_id":1, "session_id":1 , "teacher_id":"RWZWJ2DJvw4rs3iU" , "present_student_id":["1321615020","ZCPDPTDllObnZfrr"] ,"absent_student_id":[] }
+
+        JSONObject params = new JSONObject();
+
+        JSONArray jsArray = new JSONArray(present);
+        JSONArray jsAbsent = new JSONArray(absent);
+        try {
+            params.put("class_id", classId);
+            params.put("session_id", UserProfile.SessionData.Id + "");
+            params.put("teacher_id", UserProfile.UserToken);
+            params.put("present_student_id", jsArray);
+            params.put("absent_student_id", jsAbsent);
+        }
+        catch (Exception e){
+
+        }
+
+        service.MakePostRequest(Const.CREATE_STUDENT_ATTENDANCE, params, AttendanceActivity.this, new VolleyJsonObjectCallback() {
+            @Override
+            public void onSuccess(JSONObject result) {
+                Toast.makeText(AttendanceActivity.this, "Attendance posted successfully!!!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                Toast.makeText(AttendanceActivity.this, R.string.serviceError, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    private void processPieChart() {
+        chart = (PieChart) findViewById(R.id.result_pieChart);
+        chart.setDrawHoleEnabled(false);
+        chart.setDescription("");
+        ArrayList<Entry> entries = new ArrayList<>();
+        entries.add(new Entry(attendance.Absent, 0));
+        entries.add(new Entry(attendance.Present, 1));
+        PieDataSet dataSet = new PieDataSet(entries, "");
+
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(Color.rgb(44, 88, 195));
+        colors.add(Color.rgb(19, 200, 40));
+
+        dataSet.setColors(colors);
+        ArrayList<String> xVals = new ArrayList<>();
+        xVals.add("Present");
+        xVals.add("Absent");
+        PieData data = new PieData(xVals, dataSet);
+
+        data.setValueFormatter(new PercentFormatter());
+        chart.setData(data);
+        chart.invalidate();
+
+        present.setText("Present "+attendance.Present);
+        absent.setText("Absent "+attendance.Absent);
+
+    }
+
+    private void loadAttendance()
+    {
+        attendance = new StudentAttendance();
+        String monthname=(String)android.text.format.DateFormat.format("MMMM", new Date());
+        String year = (String)android.text.format.DateFormat.format("yyyy", new Date());
+        String endPoint = String.format(Const.GET_STUDENT_ATTENDANCE, UserProfile.SessionData.Id,monthname, year, UserProfile.UserToken,UserProfile.SessionData.Id,UserProfile.ClassData.Id);
+
+        service.MakeGetRequest(endPoint, this, new VolleyJsonObjectCallback() {
+            @Override
+            public void onSuccess(JSONObject result) {
+                if(result!=null)
+                {
+                    try {
+                        if(result.getJSONObject("data")!=null)
+                        {
+                            JSONObject json = result.getJSONObject("data");
+                            attendance.Present= json.getInt("x");
+                            attendance.Absent = json.getInt("y");
+                            attendance.TotalDays = json.getInt("totalDays");
+                            processPieChart();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        FirebaseCrash.report(e);
+                        e.getStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                Toast.makeText(AttendanceActivity.this, R.string.serviceError, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void loadStudents(){
+        students= new ArrayList<>();
+        service.MakeGetRequest(String.format(Const.GET_STUDENT_BY_CLASS, UserProfile.SessionData.Id, classId), AttendanceActivity.this, new VolleyJsonObjectCallback() {
+            @Override
+            public void onSuccess(JSONObject result) {
+                try{
+                    JSONArray array = result.getJSONArray("data");
+                    for(int i=0;i<array.length();i++){
+                        students.add(new ChildModel(
+                                array.getJSONObject(i).getJSONObject("student").getString("user_token"),
+                                array.getJSONObject(i).getJSONObject("student").getString("first_name"),
+                                array.getJSONObject(i).getJSONObject("student").getString("middle_name"),
+                                array.getJSONObject(i).getJSONObject("student").getString("last_name")
+                        ));
+                       setAdapter(students);
+                    }
+                }
+                catch (Exception e){
+                    e.getStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                String s = "";
+            }
+        });
+    }
+    private void setAdapter(final ArrayList<ChildModel> students)
+    {
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        adapter = new AttandanceAdapter(students);
+        recyclerView.setAdapter(adapter);
+
+        adapter.setClickListener(new ItemClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                if(view.getId()==R.id.rdbPresentAbsent){
+                    RadioGroup rdb = (RadioGroup)view.findViewById(R.id.rdbPresentAbsent);
+                    int selectedId = rdb.getCheckedRadioButtonId();
+                }
+                else if(view.getId()==R.id.rdbPresent){
+                    students.get(position).IsPresent=true;
+                }
+                else if (view.getId()==R.id.rdbAbsent){
+                    students.get(position).IsPresent=false;
+                }
+            }
+        });
+    }
+
+}

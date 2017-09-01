@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="20dp"
+    card_view:cardCornerRadius="5dp"
+    android:layout_margin="5dp"
+    card_view:cardBackgroundColor="@color/yellow">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        android:background="@color/light_black">
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:text="Subject"
+            android:textColor="@color/white"
+            android:background="@color/black"
+            android:textSize="@dimen/ListHeaderFontSize"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/homework_list_submissiondate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Submission Date: 22-July-2017"
+            android:textColor="@color/white"
+            android:background="@color/light_black"
+            android:textSize="@dimen/ListHeaderFontSize"
+            android:textStyle="bold"
+            android:gravity="center"></TextView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="72dp"
+        android:minHeight="80dp">
+        <TextView
+            android:id="@+id/homework_list_subjectName"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:text="Social Science Social Science"
+            android:textColor="@color/light_black"
+            android:background="@color/yellow_light"
+            android:textSize="@dimen/ListItemFontSize"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:gravity="center"
+            android:textAlignment="center"/>
+
+        <Button
+            android:id="@+id/homework_list_btnView"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="View"
+            android:textAllCaps="false"
+            android:layout_marginLeft="60dp"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ButtonFontSize"
+            android:textStyle="bold"
+            android:background="@drawable/rounded_button_red"/>
+
+    </LinearLayout>
+
+
+</android.support.v7.widget.CardView>
