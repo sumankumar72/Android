@@ -1,5 +1,7 @@
 package suman.dev.strocks.Model;
 
+import java.util.ArrayList;
+
 /**
  * Created by suman on 5/8/17.
  */
@@ -13,6 +15,9 @@ public class ChildModel {
 
     //This property used by teacher module to make attendance
     public boolean IsPresent;
+
+    public ArrayList<UserSubjectData> Subjects = new ArrayList<>();
+
 
     public String GetFullName()
     {

@@ -23,8 +23,16 @@ public class AttandanceAdapter extends RecyclerView.Adapter<AttandanceAdapter.Vi
     private ArrayList<ChildModel> dataSet;
     private static ItemClickListener clickListener;
 
+    //This adapter used to submit result. If adapter used by result set this property false
+    private boolean IsAttendance = true;
+
+
     public AttandanceAdapter(ArrayList<ChildModel> students){
         dataSet = students;
+    }
+    public AttandanceAdapter(ArrayList<ChildModel> students, boolean forResult){
+        dataSet = students;
+        IsAttendance=false;
     }
 
     @Override
@@ -45,6 +53,10 @@ public class AttandanceAdapter extends RecyclerView.Adapter<AttandanceAdapter.Vi
         } else if (!model.IsPresent) {
             holder.rdbPresent.setChecked(false);
             holder.rdbAbsent.setChecked(true);
+        }
+
+        if(!IsAttendance) {
+            holder.rdbPresentAbsent.setVisibility(View.GONE);
         }
     }
 
@@ -70,6 +82,8 @@ public class AttandanceAdapter extends RecyclerView.Adapter<AttandanceAdapter.Vi
 
             rdbPresent.setOnClickListener(this);
             rdbAbsent.setOnClickListener(this);
+            txtName.setOnClickListener(this);
+            v.setOnClickListener(this);
         }
 
         @Override

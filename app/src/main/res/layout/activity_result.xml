@@ -23,6 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:visibility="gone"
         android:id="@+id/layoutForStudent">
         <TextView
             android:layout_width="match_parent"
@@ -50,6 +51,19 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:id="@+id/layoutForTeacher">
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/ddlClass">
+
+        </Spinner>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recyclerView">
+        </android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
 </LinearLayout>

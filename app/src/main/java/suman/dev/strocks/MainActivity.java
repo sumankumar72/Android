@@ -283,11 +283,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent = new Intent(this, FeeActivity.class);
                 break;
             case R.id.btnResult:
-                if (UserProfile.Role.toLowerCase().equals("teacher")) {
-                    openClassChooser(R.id.btnResult);
-                } else {
-                    intent = new Intent(this, ResultActivity.class);
-                }
+                intent = new Intent(this, ResultActivity.class);
                 break;
             case R.id.btnEvents:
                 intent = new Intent(this, EventsActivity.class);
@@ -337,14 +333,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     UserProfile.childs.get(position).Selected= true;
                     selectedClassId =Integer.parseInt(UserProfile.childs.get(position).UserToken);
                     dialog.dismiss();
-                    if(id==R.id.btnHomework) {
-                        intent = new Intent(MainActivity.this, HomeworkActivity.class);
-                        intent.putExtra("headerText", "Homework");
-                    }
-                    else if(id==R.id.btnResult){
-                        intent = new Intent(MainActivity.this, ResultActivity.class);
-                    }
-
+                    intent = new Intent(MainActivity.this, HomeworkActivity.class);
+                    intent.putExtra("headerText", "Homework");
                     intent.putExtra("classId", selectedClassId+"");
                     startActivity(intent);
                 }

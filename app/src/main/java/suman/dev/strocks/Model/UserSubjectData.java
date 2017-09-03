@@ -10,5 +10,5 @@ public class UserSubjectData {
     public String Name;
     public boolean HasHomework;
     public String HomeworkId;
-
+    public String is_class_teacher;
 }

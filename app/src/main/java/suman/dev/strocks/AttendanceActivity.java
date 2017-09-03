@@ -115,6 +115,7 @@ public class AttendanceActivity extends AppCompatActivity {
             }
         }
     }
+
     private void postAttendance(){
         if(students==null)
         {
@@ -122,8 +123,6 @@ public class AttendanceActivity extends AppCompatActivity {
             return;
         }
 
-        String presentStudent="";
-        String absentStudent="";
         ArrayList<String> present= new ArrayList<>();
         ArrayList<String> absent = new ArrayList<>();
         for(ChildModel c: students){
@@ -132,14 +131,6 @@ public class AttendanceActivity extends AppCompatActivity {
             else
                absent.add(c.UserToken); //absentStudent = absentStudent+","+c.UserToken;
         }
-        //if(presentStudent.length()>1)
-//            presentStudent = presentStudent.substring(1);
-//        if(absentStudent.length()>1)
-//            absentStudent = absentStudent.substring(1);
-
-  //      presentStudent = "["+presentStudent+"]";
-    //    absentStudent = "["+absentStudent+"]";
-        //{"class_id":1, "session_id":1 , "teacher_id":"RWZWJ2DJvw4rs3iU" , "present_student_id":["1321615020","ZCPDPTDllObnZfrr"] ,"absent_student_id":[] }
 
         JSONObject params = new JSONObject();
 
@@ -198,6 +189,7 @@ public class AttendanceActivity extends AppCompatActivity {
 
     }
 
+    //This function execute when user loggedin as Student or Parent Role
     private void loadAttendance()
     {
         attendance = new StudentAttendance();
@@ -235,6 +227,7 @@ public class AttendanceActivity extends AppCompatActivity {
         });
     }
 
+    //This function execute when user loggedin as Teacher Role
     private void loadStudents(){
         students= new ArrayList<>();
         service.MakeGetRequest(String.format(Const.GET_STUDENT_BY_CLASS, UserProfile.SessionData.Id, classId), AttendanceActivity.this, new VolleyJsonObjectCallback() {
@@ -249,8 +242,8 @@ public class AttendanceActivity extends AppCompatActivity {
                                 array.getJSONObject(i).getJSONObject("student").getString("middle_name"),
                                 array.getJSONObject(i).getJSONObject("student").getString("last_name")
                         ));
-                       setAdapter(students);
                     }
+                    setAdapter(students);
                 }
                 catch (Exception e){
                     e.getStackTrace();
@@ -263,6 +256,7 @@ public class AttendanceActivity extends AppCompatActivity {
             }
         });
     }
+
     private void setAdapter(final ArrayList<ChildModel> students)
     {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);

@@ -328,6 +328,7 @@ public class UserProfileHeader {
                         subjectData.Id = subjects.getJSONObject(i).getInt("id");
                         subjectData.ClassId = subjects.getJSONObject(i).getInt("class_id");
                         subjectData.Name = subjects.getJSONObject(i).getString("name");
+                        subjectData.is_class_teacher = "Yes";//subjects.getJSONObject(i).getString("is_class_teacher");
                         UserProfile.TeacherSubjects.add(subjectData);
                     }
                     JSONArray classes = result.getJSONArray("classes");
