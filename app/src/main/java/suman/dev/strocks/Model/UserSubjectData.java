@@ -11,4 +11,12 @@ public class UserSubjectData {
     public boolean HasHomework;
     public String HomeworkId;
     public String is_class_teacher;
+
+
+    ///These property used in save result
+
+    public String MarksObtained;
+    public String Grade;
+    public String Review;
+
 }

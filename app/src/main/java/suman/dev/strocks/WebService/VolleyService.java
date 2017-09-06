@@ -70,7 +70,7 @@ public class VolleyService {
 
     public void MakeGetRequest(String endPoint,Context context, final VolleyJsonObjectCallback callback)
     {
-        common =new Common(context);
+        common = new Common(context);
         common.ShowPleaseWait();
         RequestQueue requestQueue = Volley.newRequestQueue(context);
 

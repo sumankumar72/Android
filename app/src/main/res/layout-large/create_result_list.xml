@@ -104,7 +104,20 @@
                 android:hint="Enter Grade"
                 android:textColor="@color/black"
                 android:textSize="@dimen/LabelFontSize"/>
-
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/txtReview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"
+                android:gravity="top"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:hint="Write your review here..."/>
         </LinearLayout>
     </LinearLayout>
 

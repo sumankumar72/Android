@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:paddingBottom="10dp">
 
     <TextView
         android:layout_width="match_parent"
@@ -29,15 +30,13 @@
     <Button
         android:id="@+id/btnSave"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="80dp"
         android:text="Save Result"
         android:textAlignment="center"
         android:background="@drawable/rounded_button_red"
         android:layout_alignParentBottom="true"
-        android:textSize="@dimen/ButtonFontSize"
         android:textColor="@color/white"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="5dp"/>
+        android:layout_marginRight="10dp"/>
 
 </RelativeLayout>

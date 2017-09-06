@@ -1,6 +1,9 @@
 package suman.dev.strocks.Adapters;
 
+import android.support.v7.widget.ListViewCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,14 +41,68 @@ public class ResultPostAdapter extends RecyclerView.Adapter<ResultPostAdapter.Vi
     }
 
 
-    public void onBindViewHolder(ResultPostAdapter.ViewHolder holder, int position) {
-        UserSubjectData model = dataSet.get(position);
+    public void onBindViewHolder(final ResultPostAdapter.ViewHolder holder, int position) {
+        final UserSubjectData model = dataSet.get(position);
         holder.lblSubject.setText(model.Name);
+
+
+        holder.txtReview.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                model.Review = holder.txtReview.getText().toString();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        holder.txtGrdde.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                model.Grade = holder.txtGrdde.getText().toString();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        holder.txtMarksObtained.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                model.MarksObtained = holder.txtMarksObtained.getText().toString();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView lblTotalMarks, lblSubject;
-        public EditText txtMarksObtained, txtGrdde;
+        public EditText txtMarksObtained, txtGrdde, txtReview;
         public View view;
 
         public ViewHolder(View v){
@@ -56,6 +113,7 @@ public class ResultPostAdapter extends RecyclerView.Adapter<ResultPostAdapter.Vi
             lblTotalMarks = (TextView)view.findViewById(R.id.lblTotalMarks);
             txtGrdde = (EditText)view.findViewById(R.id.txtGrade);
             txtMarksObtained = (EditText)view.findViewById(R.id.txtMarksObtained);
+            txtReview = (EditText)view.findViewById(R.id.txtReview);
         }
     }
 }

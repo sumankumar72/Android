@@ -8,10 +8,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
@@ -47,7 +49,7 @@ import suman.dev.strocks.WebService.VolleyService;
 
 public class ResultActivity extends AppCompatActivity {
 
-    private VolleyService service = new VolleyService();
+    private final VolleyService service = new VolleyService();
     private ArrayList<StudentResult> results;
     private ArrayList<Semester> semesters= new ArrayList<Semester>();
     private Semester semester;
@@ -63,6 +65,8 @@ public class ResultActivity extends AppCompatActivity {
     private AttandanceAdapter resultAdapter;
     private ArrayList<ChildModel> students;
     private String classId;
+    private String semesterId;
+    private boolean semesterLoaded= false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +80,7 @@ public class ResultActivity extends AppCompatActivity {
         TextView content_title = (TextView) findViewById(R.id.content_toolbar_title);
         content_title.setText("Result");
         content_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.syllabus_black, 0, 0, 0);
-
+        ddlSemester = (Spinner) findViewById(R.id.ddlSemester);
 
         if(UserProfile.Role.toLowerCase().equals("teacher")) {
             initLayoutForTeacher();
@@ -87,14 +91,15 @@ public class ResultActivity extends AppCompatActivity {
         }
 
     }
-    private void initLayoutForTeacher(){
-        LinearLayout layoutForStudent = (LinearLayout)findViewById(R.id.layoutForStudent);
+
+    private void initLayoutForTeacher() {
+        LinearLayout layoutForStudent = (LinearLayout) findViewById(R.id.layoutForStudent);
         layoutForStudent.setVisibility(View.GONE);
 
-        LinearLayout layoutForTeacher = (LinearLayout)findViewById(R.id.layoutForTeacher);
+        LinearLayout layoutForTeacher = (LinearLayout) findViewById(R.id.layoutForTeacher);
         layoutForTeacher.setVisibility(View.VISIBLE);
 
-        Spinner ddlClass =(Spinner)findViewById(R.id.ddlClass);
+        Spinner ddlClass = (Spinner) findViewById(R.id.ddlClass);
         ArrayAdapter<UserClassData> spinerAdapter = new ArrayAdapter<UserClassData>(this, R.layout.support_simple_spinner_dropdown_item, UserProfile.Classes);
         ddlClass.setAdapter(spinerAdapter);
 
@@ -111,20 +116,34 @@ public class ResultActivity extends AppCompatActivity {
 
                 }
             });
-        }
-        catch (Exception e){
+
+            ddlSemester.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    semesterId = semesters.get(position).SemesterId + "";
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+        } catch (Exception e) {
 
         }
-
     }
 
     //This function execute when user loggedin as Teacher Role
     private void loadStudents(){
         students= new ArrayList<>();
-        service.MakeGetRequest(String.format(Const.GET_STUDENT_BY_CLASS, UserProfile.SessionData.Id, classId), ResultActivity.this, new VolleyJsonObjectCallback() {
+        service.MakeGetRequest(String.format(Const.GET_STUDENT_BY_CLASS, UserProfile.SessionData.Id, classId),
+                ResultActivity.this, new VolleyJsonObjectCallback() {
             @Override
             public void onSuccess(JSONObject result) {
                 try{
+                    if(!semesterLoaded)
+                        loadSemester();
+
                     ChildModel child ;
                     JSONArray array = result.getJSONArray("data");
                     for(int i=0;i<array.length();i++){
@@ -143,7 +162,7 @@ public class ResultActivity extends AppCompatActivity {
                             subjectData.Name = subjects.getJSONObject(j).getString("name");
                             boolean flag= false;
                             for(UserSubjectData d: UserProfile.TeacherSubjects){
-                                if(d.is_class_teacher.equals("Yes") && d.Id==subjectData.Id ){
+                                if(!d.is_class_teacher.isEmpty() && d.is_class_teacher.equals("Yes") && d.Id==subjectData.Id ){
                                     flag = true;
                                     break;
                                 }
@@ -180,14 +199,14 @@ public class ResultActivity extends AppCompatActivity {
         resultAdapter.setClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position) {
-                createResultDialog(students.get(position).Subjects);
+
+                createResultDialog(students.get(position).UserToken, students.get(position).Subjects);
             }
         });
     }
 
     private void initLayoutForStudent(){
         loadSemester();
-        ddlSemester = (Spinner) findViewById(R.id.ddlSemester);
 
         ddlSemester.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -202,7 +221,6 @@ public class ResultActivity extends AppCompatActivity {
         });
     }
 
-
     private void setAdapter()
     {
         if(results==null)
@@ -213,9 +231,10 @@ public class ResultActivity extends AppCompatActivity {
 
     private void loadSemester()
     {
-        service.MakeGetRequest(Const.GET_SEMESTER, this, new VolleyJsonObjectCallback() {
+        service.MakeGetRequest(Const.GET_SEMESTER, ResultActivity.this, new VolleyJsonObjectCallback() {
             @Override
             public void onSuccess(JSONObject result) {
+                semesterLoaded = true;
                 if(result!=null)
                 {
                     try{
@@ -282,7 +301,37 @@ public class ResultActivity extends AppCompatActivity {
             }
         });
     }
-    private void createResultDialog(ArrayList<UserSubjectData> dataSet){
+
+    private void postResult(JSONArray subjects){
+        JSONObject params = new JSONObject();
+        try {
+            params.put("class_id", classId);
+            params.put("session_id", UserProfile.SessionData.Id);
+            params.put("semester_id", semesterId);
+            params.put("teacher_id", UserProfile.UserToken);
+            params.put("full_marks", "100");
+            params.put("student_result", subjects);
+        }
+        catch (Exception e){
+
+        }
+
+
+
+        service.MakePostRequest(Const.CREATE_RESULT, params, ResultActivity.this, new VolleyJsonObjectCallback() {
+            @Override
+            public void onSuccess(JSONObject result) {
+                Toast.makeText(ResultActivity.this, "Result posted successfully.", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                Toast.makeText(ResultActivity.this, R.string.serviceError, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void createResultDialog(final String StudentId, final ArrayList<UserSubjectData> dataSet){
         try {
             ResultPostAdapter postAdapter= new ResultPostAdapter(dataSet);
             RecyclerView.LayoutManager postResultLayoutManager= new LinearLayoutManager(this);
@@ -297,7 +346,36 @@ public class ResultActivity extends AppCompatActivity {
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(dialog.getWindow().getAttributes());
             lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            lp.gravity = Gravity.CENTER;
+            lp.windowAnimations = R.style.DialogAnimation;
             dialog.getWindow().setAttributes(lp);
+
+
+            Button btnSave = (Button)dialog.findViewById(R.id.btnSave);
+            btnSave.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(ResultActivity.this, dataSet.get(0).Review, Toast.LENGTH_SHORT).show();
+                    JSONArray subejctsArray = new JSONArray();
+                    JSONObject sub ;
+                    for(UserSubjectData s: dataSet){
+                        sub=new JSONObject();
+                        try{
+                            sub.put("student_id",StudentId);
+                            sub.put("subject_id",s.Id+"");
+                            sub.put("marks_obtained",s.MarksObtained);
+                            sub.put("grade",s.Grade);
+                            sub.put("review",s.Review);
+                            subejctsArray.put(sub);
+                        }
+                        catch (Exception e){
+
+                        }
+                    }
+                    postResult(subejctsArray);
+                }
+            });
 
 
 //            adapter.setClickListener(new ItemClickListener() {

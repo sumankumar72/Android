@@ -328,7 +328,7 @@ public class UserProfileHeader {
                         subjectData.Id = subjects.getJSONObject(i).getInt("id");
                         subjectData.ClassId = subjects.getJSONObject(i).getInt("class_id");
                         subjectData.Name = subjects.getJSONObject(i).getString("name");
-                        subjectData.is_class_teacher = "Yes";//subjects.getJSONObject(i).getString("is_class_teacher");
+                        //subjectData.is_class_teacher = "Yes";//subjects.getJSONObject(i).getString("is_class_teacher");
                         UserProfile.TeacherSubjects.add(subjectData);
                     }
                     JSONArray classes = result.getJSONArray("classes");
@@ -340,6 +340,14 @@ public class UserProfileHeader {
                         classData.Name = classes.getJSONObject(i).getString("name");
                         UserProfile.Classes.add(classData);
                         UserProfile.childs.add(new ChildModel(classData.Id+"", classData.Name, "", ""));
+                    }
+
+                    JSONArray data = result.getJSONArray("data");
+                    for(int i=0;i<data.length();i++){
+                        for(UserSubjectData s : UserProfile.TeacherSubjects){
+                            if(data.getJSONObject(i).getInt("subject_id")==s.Id)
+                                s.is_class_teacher = data.getJSONObject(i).getString("is_class_teacher");
+                        }
                     }
 
                 }catch (Exception e){

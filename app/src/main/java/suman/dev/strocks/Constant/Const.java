@@ -40,6 +40,7 @@ public class Const {
     public static final String PROFILE_IMAGE_BASE=BASE_URL+"/school/public/uploaded_images/users/";
     public static final String TEACHER_SUBJECT_DATA="/school/public/school/api/teachersubject/0/edit?session_id=%s&class_id=%s&teacher_id=%s";
     public static final String GET_STUDENT_BY_CLASS="/school/public/school/api/studentsession/0/edit?session_id=%s&class_id=%s&session2=0";
+    public static final String CREATE_RESULT="/school/public/school/api/studentresult/create";
 
 
 
