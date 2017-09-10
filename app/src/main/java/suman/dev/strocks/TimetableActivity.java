@@ -54,8 +54,8 @@ public class TimetableActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timetable);
-        addTime();
-        //getTimetable();
+        //addTime();
+        getTimetable();
     }
 
     private void addTabs(){

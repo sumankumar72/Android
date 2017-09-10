@@ -47,14 +47,14 @@ public class HomeworkActivity extends AppCompatActivity implements View.OnClickL
                 content_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.syllabus_black, 0, 0, 0);
             else {
                 content_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.reading1_black, 0, 0, 0);
+            }
 
-                if(UserProfile.Role.toLowerCase().equals("teacher")) {
-                    selectedClassId = Integer.parseInt(getIntent().getStringExtra("classId"));
-                    UserProfile.SubjectData.clear();
-                    for (UserSubjectData s : UserProfile.TeacherSubjects) {
-                        if(s.ClassId==selectedClassId)
-                            UserProfile.SubjectData.add(s);
-                    }
+            if(UserProfile.Role.toLowerCase().equals("teacher")) {
+                selectedClassId = Integer.parseInt(getIntent().getStringExtra("classId"));
+                UserProfile.SubjectData.clear();
+                for (UserSubjectData s : UserProfile.TeacherSubjects) {
+                    if(s.ClassId==selectedClassId)
+                        UserProfile.SubjectData.add(s);
                 }
             }
         }

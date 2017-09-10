@@ -302,7 +302,7 @@ public class ResultActivity extends AppCompatActivity {
         });
     }
 
-    private void postResult(JSONArray subjects){
+    private void postResult(JSONArray subjects, final Dialog dialog){
         JSONObject params = new JSONObject();
         try {
             params.put("class_id", classId);
@@ -322,11 +322,13 @@ public class ResultActivity extends AppCompatActivity {
             @Override
             public void onSuccess(JSONObject result) {
                 Toast.makeText(ResultActivity.this, "Result posted successfully.", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
             }
 
             @Override
             public void onError(VolleyError error) {
                 Toast.makeText(ResultActivity.this, R.string.serviceError, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
             }
         });
     }
@@ -353,10 +355,10 @@ public class ResultActivity extends AppCompatActivity {
 
 
             Button btnSave = (Button)dialog.findViewById(R.id.btnSave);
+
             btnSave.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(ResultActivity.this, dataSet.get(0).Review, Toast.LENGTH_SHORT).show();
                     JSONArray subejctsArray = new JSONArray();
                     JSONObject sub ;
                     for(UserSubjectData s: dataSet){
@@ -373,26 +375,10 @@ public class ResultActivity extends AppCompatActivity {
 
                         }
                     }
-                    postResult(subejctsArray);
+                    postResult(subejctsArray, dialog);
                 }
             });
-
-
-//            adapter.setClickListener(new ItemClickListener() {
-//                @Override
-//                public void onClick(View view, int position) {
-//                    for (ChildModel c : UserProfile.childs)
-//                        c.Selected = false;
-//                    UserProfile.childs.get(position).Selected= true;
-//                    selectedClassId =Integer.parseInt(UserProfile.childs.get(position).UserToken);
-//                    dialog.dismiss();
-//                    intent = new Intent(MainActivity.this, HomeworkActivity.class);
-//                    intent.putExtra("headerText", "Homework");
-//                    intent.putExtra("classId", selectedClassId+"");
-//                    startActivity(intent);
-//                }
-//            });
-
+            
             dialog.setTitle("Post Result");
             dialog.show();
         } catch (Exception e) {

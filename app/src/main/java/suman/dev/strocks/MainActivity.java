@@ -273,8 +273,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.btnSyllabus:
-                intent = new Intent(this, HomeworkActivity.class);
-                intent.putExtra("headerText", "Syllabus");
+                if (UserProfile.Role.toLowerCase().equals("teacher")) {
+                    openClassChooser(R.id.btnSyllabus);
+                } else {
+                    intent = new Intent(this, HomeworkActivity.class);
+                    intent.putExtra("headerText", "Syllabus");
+                }
                 break;
             case R.id.btnHolidayList:
                 intent = new Intent(this, HolidayListActivity.class);
@@ -333,9 +337,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     UserProfile.childs.get(position).Selected= true;
                     selectedClassId =Integer.parseInt(UserProfile.childs.get(position).UserToken);
                     dialog.dismiss();
-                    intent = new Intent(MainActivity.this, HomeworkActivity.class);
-                    intent.putExtra("headerText", "Homework");
-                    intent.putExtra("classId", selectedClassId+"");
+                    if(id==R.id.btnHomework) {
+                        intent = new Intent(MainActivity.this, HomeworkActivity.class);
+                        intent.putExtra("headerText", "Homework");
+                        intent.putExtra("classId", selectedClassId + "");
+                    }
+                    else if(id==R.id.btnSyllabus){
+                        intent = new Intent(MainActivity.this, HomeworkActivity.class);
+                        intent.putExtra("headerText", "Syllabus");
+                        intent.putExtra("classId", selectedClassId + "");
+                    }
                     startActivity(intent);
                 }
             });
