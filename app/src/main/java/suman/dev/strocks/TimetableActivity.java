@@ -27,7 +27,6 @@ import suman.dev.strocks.Constant.Const;
 import suman.dev.strocks.Model.TimeTable;
 import suman.dev.strocks.Model.TimeTableDetail;
 import suman.dev.strocks.Model.TimeTableDetailModel;
-import suman.dev.strocks.Model.Timetable;
 import suman.dev.strocks.Model.UserProfile;
 import suman.dev.strocks.WebService.VolleyJsonObjectCallback;
 import suman.dev.strocks.WebService.VolleyService;

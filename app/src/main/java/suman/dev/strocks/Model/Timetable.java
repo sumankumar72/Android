@@ -1,28 +1,39 @@
 package suman.dev.strocks.Model;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
 /**
- * Created by suman on 23/8/17.
+ * Created by suman on 22/8/17.
  */
 
-public class Timetable {
+public class TimeTable{
+    private SimpleDateFormat format;
+    public int index;
+    public String Day;
     public String StartTime;
     public String EndTime;
 
-    public String MonStartTime;
-    public String MonEndTime;
+    public Date StartDateTime;
+    public String Subject;
+    public String TeacherName;
 
-    public String TueStartTime;
-    public String TueEndTime;
+    public ArrayList<TimeTableDetail> Details = new ArrayList<>();
+    public ArrayList<TimeTableDetailModel> timetable = new ArrayList<>();
 
-    public String WedStartTime;
-    public String WedEndTime;
+    public TimeTable(String Subject, String TeacherName, String Day, String StartTime, String EndTime) {
+        this.Day = Day;
+        this.Subject = Subject;
+        this.TeacherName = TeacherName;
+        this.StartTime = StartTime;
+        this.EndTime = EndTime;
+        try {
+            format = new SimpleDateFormat("HH:mm");
+            this.StartDateTime = format.parse(this.StartTime);
+        }catch (Exception e){
 
-    public String ThuStartTime;
-    public String ThuEndTime;
-
-    public String FriStartTime;
-    public String FriEndTime;
-
-    public String SatStartTime;
-    public String SatEndTime;
+        }
+        //this.Details = Details;
+    }
 }

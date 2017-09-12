@@ -20,7 +20,6 @@ import suman.dev.strocks.Adapters.TimeTableAdapter;
 import suman.dev.strocks.Model.TimeTable;
 import suman.dev.strocks.Model.TimeTableDetail;
 import suman.dev.strocks.Model.TimeTableDetailModel;
-import suman.dev.strocks.Model.Timetable;
 
 /**
  * Created by suman on 23/8/17.
