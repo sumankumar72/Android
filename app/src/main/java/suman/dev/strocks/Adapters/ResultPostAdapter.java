@@ -44,7 +44,13 @@ public class ResultPostAdapter extends RecyclerView.Adapter<ResultPostAdapter.Vi
     public void onBindViewHolder(final ResultPostAdapter.ViewHolder holder, int position) {
         final UserSubjectData model = dataSet.get(position);
         holder.lblSubject.setText(model.Name);
+        holder.txtGrdde.setText(model.Grade);
+        holder.txtMarksObtained.setText(model.MarksObtained);
+        holder.txtReview.setText(model.Review);
 
+        holder.txtGrdde.setEnabled((model.Grade.trim().length()<=0));
+        holder.txtMarksObtained.setEnabled((model.MarksObtained.trim().length()<=0));
+        holder.txtReview.setEnabled((model.Review.trim().length()<=0));
 
         holder.txtReview.addTextChangedListener(new TextWatcher() {
             @Override

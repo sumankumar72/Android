@@ -23,6 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:visibility="visible"
         android:paddingLeft="5dp"
         android:paddingRight="5dp">
             <TextView
@@ -76,18 +77,36 @@
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-            <Spinner
-                android:id="@+id/ddlClass"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:padding="10dp">
-            </Spinner>
+
+        <TextView
+            android:id="@+id/lblClassName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Class: "
+            android:textStyle="bold"
+            android:textSize="@dimen/HeadingFontSize"
+            android:padding="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"/>
+        <TextView
+            android:id="@+id/lblDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date: "
+            android:clickable="true"
+            android:textStyle="bold"
+            android:textSize="@dimen/HeadingFontSize"
+            android:padding="10dp"
+            android:layout_below="@+id/lblClassName"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/ddlClass"
+                android:layout_below="@+id/lblDate"
                 android:layout_above="@+id/btnPostAttendance">
             </android.support.v7.widget.RecyclerView>
 
@@ -99,6 +118,9 @@
                 android:background="@drawable/rounded_button_red"
                 android:textColor="@color/white"
                 android:textSize="@dimen/ButtonFontSize"
-                android:layout_alignParentBottom="true"/>
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"/>
     </RelativeLayout>
 </LinearLayout>

@@ -93,6 +93,8 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     private void initLayoutForTeacher() {
+        loadSemester();
+
         LinearLayout layoutForStudent = (LinearLayout) findViewById(R.id.layoutForStudent);
         layoutForStudent.setVisibility(View.GONE);
 
@@ -108,7 +110,8 @@ public class ResultActivity extends AppCompatActivity {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     classId= UserProfile.Classes.get(position).Id + "";
-                    loadStudents();
+                    if(semesterLoaded)
+                        loadStudents();
                 }
 
                 @Override
@@ -121,6 +124,7 @@ public class ResultActivity extends AppCompatActivity {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     semesterId = semesters.get(position).SemesterId + "";
+                    loadStudents();
                 }
 
                 @Override
@@ -133,20 +137,52 @@ public class ResultActivity extends AppCompatActivity {
         }
     }
 
+    private boolean checkDuplicateStudent(int id){
+        boolean flag = false;
+        for(ChildModel c : students){
+            if(id==c.Id) {
+                flag = true;
+                break;
+            }
+        }
+        return flag;
+    }
     //This function execute when user loggedin as Teacher Role
-    private void loadStudents(){
-        students= new ArrayList<>();
-        service.MakeGetRequest(String.format(Const.GET_STUDENT_BY_CLASS, UserProfile.SessionData.Id, classId),
+    private void loadStudents() {
+        students = new ArrayList<>();
+        service.MakeGetRequest("/school/public/school/api/studentresult/1/result?teacher_id=RWZWJ2DJvw4rs3iU&class_id=1&subject_id=1&semester_id=1",
                 ResultActivity.this, new VolleyJsonObjectCallback() {
-            @Override
-            public void onSuccess(JSONObject result) {
-                try{
-                    if(!semesterLoaded)
-                        loadSemester();
+                    @Override
+                    public void onSuccess(JSONObject result) {
+                        try {
+                            ChildModel child = null;
+                            JSONArray array = result.getJSONArray("data");
+                            for (int i = 0; i < array.length(); i++) {
+                                if (!checkDuplicateStudent(array.getJSONObject(i).getInt("student_id"))) {
+                                    child = new ChildModel(array.getJSONObject(i).getInt("student_id") + "", array.getJSONObject(i).getString("student_name"), "", "");
+                                    child.Id = array.getJSONObject(i).getInt("student_id");
+                                    students.add(child);
+                                }
+                            }
 
-                    ChildModel child ;
-                    JSONArray array = result.getJSONArray("data");
+                            UserSubjectData subjectData;
+                            for(ChildModel c: students) {
+                                for (int i = 0; i < array.length(); i++) {
+                                    if(c.Id==array.getJSONObject(i).getInt("student_id")) {
+                                        subjectData = new UserSubjectData();
+                                        subjectData.Id = array.getJSONObject(i).getInt("subject_id");
+                                        subjectData.Name = array.getJSONObject(i).getString("subject_name");
+                                        subjectData.FullMarks = array.getJSONObject(i).getString("full_marks");
+                                        subjectData.MarksObtained = array.getJSONObject(i).getString("marks_obtained");
+                                        subjectData.Grade = array.getJSONObject(i).getString("grade");
+                                        subjectData.Review = array.getJSONObject(i).getString("review");
+                                        c.Subjects.add(subjectData);
+                                    }
+                                }
+                            }
+                /*
                     for(int i=0;i<array.length();i++){
+
                         JSONObject studentJson =array.getJSONObject(i).getJSONObject("student");
                        child =  new ChildModel(
                                studentJson.getString("user_token"),
@@ -171,19 +207,20 @@ public class ResultActivity extends AppCompatActivity {
                                 child.Subjects.add(subjectData);
                         }
                         students.add(child);
+                    }*/
+                            setAdapter(students);
+                        } catch (Exception e) {
+                            e.getStackTrace();
+                        }
                     }
-                    setAdapter(students);
-                }
-                catch (Exception e){
-                    e.getStackTrace();
-                }
-            }
 
-            @Override
-            public void onError(VolleyError error) {
-                String s = "";
-            }
-        });
+                    @Override
+                    public void onError(VolleyError error) {
+
+                        String s = "";
+
+                    }
+                });
     }
 
     private void setAdapter(final ArrayList<ChildModel> students)
@@ -234,7 +271,6 @@ public class ResultActivity extends AppCompatActivity {
         service.MakeGetRequest(Const.GET_SEMESTER, ResultActivity.this, new VolleyJsonObjectCallback() {
             @Override
             public void onSuccess(JSONObject result) {
-                semesterLoaded = true;
                 if(result!=null)
                 {
                     try{
@@ -254,6 +290,7 @@ public class ResultActivity extends AppCompatActivity {
                         FirebaseCrash.report(e);
                     }
                 }
+                semesterLoaded = true;
             }
 
             @Override

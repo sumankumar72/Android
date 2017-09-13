@@ -18,6 +18,7 @@ public class Const {
     public static final String GET_FEE_DETAILS="/school/public/school/api/studentfees/%s/edit?m=%s&session_id=%s";
     public static final String GET_USER_PROFILE="/school/public/school/api/user/%s/edit";
     public static final String GET_STUDENT_ATTENDANCE="/school/public/school/api/studentattendance/%s/graph?m=%s&y=%s&student_id=%sn&session_id=%s&class_id=%s";
+    public static final String GET_STUDENTS_FOR_ATTENDANCE="/school/public/school/api/studentattendance/1/attendance?class_id=%s&teacher_id=%s&date=%s";
     public static final String CREATE_STUDENT_ATTENDANCE="/school/public/school/api/studentattendance/create";
     public static final String GET_STUDENT_RESULT="/school/public/school/api/studentresult/0/edit?student_id=%s&semester_id=%s";
     public static final String GET_STUDENT_SYLLABUS="/school/public/school/api/subject/%s/edit";
@@ -39,6 +40,7 @@ public class Const {
     public static final String HOMEWORK_IMAGE_BASE=BASE_URL+"/school/public/uploaded_images/student-homeWork/";
     public static final String PROFILE_IMAGE_BASE=BASE_URL+"/school/public/uploaded_images/users/";
     public static final String TEACHER_SUBJECT_DATA="/school/public/school/api/teachersubject/0/edit?session_id=%s&class_id=%s&teacher_id=%s";
+    public static final String GET_STUDENT_FOR_RESULT="/school/public/school/api/studentresult/1/result?teacher_id=%s&class_id=%s&subject_id=1&semester_id=%s";
     public static final String GET_STUDENT_BY_CLASS="/school/public/school/api/studentsession/0/edit?session_id=%s&class_id=%s&session2=0";
     public static final String CREATE_RESULT="/school/public/school/api/studentresult/create";
 

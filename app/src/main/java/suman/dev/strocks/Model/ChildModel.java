@@ -7,6 +7,7 @@ import java.util.ArrayList;
  */
 
 public class ChildModel {
+    public int Id;
     public String UserToken;
     public String FirstName;
     public String MiddleName;

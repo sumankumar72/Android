@@ -1,5 +1,6 @@
 package suman.dev.strocks;
 
+import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -28,9 +30,12 @@ import com.google.firebase.crash.FirebaseCrash;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import suman.dev.strocks.Adapters.AttandanceAdapter;
@@ -59,7 +64,9 @@ public class AttendanceActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private AttandanceAdapter adapter;
     private ArrayList<ChildModel> students;
-    private String classId;
+    private String classId="1";
+    private String selectedDate="";
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,40 +91,54 @@ public class AttendanceActivity extends AppCompatActivity {
             RelativeLayout viewStudenList  = (RelativeLayout) findViewById(R.id.viewStudenList);
             viewStudenList.setVisibility(View.VISIBLE);
 
+            final Button btnPostAttendance =(Button)findViewById(R.id.btnPostAttendance);
+            final TextView lblDate = (TextView)findViewById(R.id.lblDate);
+            selectedDate=sdf.format(new Date());
+            lblDate.setText("Date: "+ selectedDate);
+            loadStudents();
+            final Calendar calendar = Calendar.getInstance();
+
+            final DatePickerDialog.OnDateSetListener date =  new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                    calendar.set(Calendar.YEAR, year);
+                    calendar.set(Calendar.MONTH, month);
+                    calendar.set(Calendar.DAY_OF_MONTH, day);
+                    selectedDate=sdf.format(calendar.getTime());
+                    lblDate.setText("Date: "+ selectedDate);
+                    loadStudents();
+                    btnPostAttendance.setEnabled(selectedDate.toLowerCase().equals(sdf.format(new Date()).toLowerCase()));
+                }
+            };
+
+
+            final DatePickerDialog datePicker = new DatePickerDialog(AttendanceActivity.this, date, calendar
+                    .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH));
+
+            datePicker.getDatePicker().setMaxDate(System.currentTimeMillis());
+
+            lblDate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    datePicker.show();
+                }
+            });
+
+
+
             recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
-            Spinner ddlClass =(Spinner)findViewById(R.id.ddlClass);
-            Button btnPostAttendance =(Button)findViewById(R.id.btnPostAttendance);
-            ArrayAdapter<UserClassData> spinerAdapter = new ArrayAdapter<UserClassData>(this, R.layout.support_simple_spinner_dropdown_item, UserProfile.Classes);
-            ddlClass.setAdapter(spinerAdapter);
-            try {
-                ddlClass.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        classId= UserProfile.Classes.get(position).Id + "";
-                        loadStudents();
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
-                btnPostAttendance.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        postAttendance();
-                    }
-                });
-
-            }
-            catch (Exception e){
-
-            }
+            btnPostAttendance.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    postAttendance();
+                }
+            });
         }
     }
 
     private void postAttendance(){
-        if(students==null)
+        if(students==null || students.size()<=0)
         {
             Toast.makeText(this, "Attendance not avaliable!", Toast.LENGTH_SHORT).show();
             return;
@@ -230,18 +251,21 @@ public class AttendanceActivity extends AppCompatActivity {
     //This function execute when user loggedin as Teacher Role
     private void loadStudents(){
         students= new ArrayList<>();
-        service.MakeGetRequest(String.format(Const.GET_STUDENT_BY_CLASS, UserProfile.SessionData.Id, classId), AttendanceActivity.this, new VolleyJsonObjectCallback() {
+        service.MakeGetRequest(String.format(Const.GET_STUDENTS_FOR_ATTENDANCE, classId, UserProfile.UserToken, selectedDate), AttendanceActivity.this, new VolleyJsonObjectCallback() {
             @Override
             public void onSuccess(JSONObject result) {
                 try{
                     JSONArray array = result.getJSONArray("data");
+                    ChildModel student;
                     for(int i=0;i<array.length();i++){
-                        students.add(new ChildModel(
-                                array.getJSONObject(i).getJSONObject("student").getString("user_token"),
-                                array.getJSONObject(i).getJSONObject("student").getString("first_name"),
-                                array.getJSONObject(i).getJSONObject("student").getString("middle_name"),
-                                array.getJSONObject(i).getJSONObject("student").getString("last_name")
-                        ));
+                        student = new ChildModel(array.getJSONObject(i).getString("student_id"), array.getJSONObject(i).getString("student_name"), "", "");
+                        if(array.getJSONObject(i).getString("attendance").toLowerCase().equals("present"))
+                            student.IsPresent=true;
+                        else
+                            student.IsPresent=false;
+
+                        students.add(student);
+
                     }
                     setAdapter(students);
                 }

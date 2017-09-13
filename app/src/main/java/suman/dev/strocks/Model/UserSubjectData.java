@@ -14,7 +14,7 @@ public class UserSubjectData {
 
 
     ///These property used in save result
-
+    public String FullMarks;
     public String MarksObtained;
     public String Grade;
     public String Review;
