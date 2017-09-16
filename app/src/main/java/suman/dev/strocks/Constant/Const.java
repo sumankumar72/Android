@@ -43,6 +43,8 @@ public class Const {
     public static final String GET_STUDENT_FOR_RESULT="/school/public/school/api/studentresult/1/result?teacher_id=%s&class_id=%s&subject_id=1&semester_id=%s";
     public static final String GET_STUDENT_BY_CLASS="/school/public/school/api/studentsession/0/edit?session_id=%s&class_id=%s&session2=0";
     public static final String CREATE_RESULT="/school/public/school/api/studentresult/create";
+    public static final String GET_HOMEWORK_LIST= "/school/public/school/api/homework/0/list?teacher_id=%s&class_id=%s&subject_id=%s&issued_date=%s";
+    public static final String CREATE_PENALTY = "/school/public/school/api/studentpayment/penalty";
 
 
 

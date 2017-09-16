@@ -17,6 +17,8 @@ public class ChildModel {
     //This property used by teacher module to make attendance
     public boolean IsPresent;
 
+    public boolean ResultCompleted;
+
     public ArrayList<UserSubjectData> Subjects = new ArrayList<>();
 
 

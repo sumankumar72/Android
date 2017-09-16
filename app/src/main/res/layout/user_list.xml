@@ -20,6 +20,7 @@
             android:padding="20dp"
             android:backgroundTint="@color/yellow"
             android:clickable="true"
+            android:drawableTint="@color/green"
             android:textSize="@dimen/LabelFontSize"/>
 
             <RadioGroup

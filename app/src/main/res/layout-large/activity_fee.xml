@@ -17,10 +17,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         layout="@layout/content_toolbar"/>
-    <LinearLayout
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:id="@+id/layoutStudentFee"
+        android:visibility="gone"
+        android:padding="10dp">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,81 +32,89 @@
             android:textColor="@color/black"
             android:textSize="@dimen/SubHeadingFontSize"
             android:padding="10dp"/>
-
-
         <Spinner
             android:id="@+id/ddlMonth"
             android:layout_width="match_parent"
+            android:layout_alignParentRight="true"
             android:layout_height="50dp">
         </Spinner>
-    </LinearLayout>
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="10dp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/feeRecycleView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:scrollbars="vertical"
+            android:layout_below="@+id/ddlMonth"
+            android:layout_above="@+id/fee_btnPayNow"
             android:layout_weight="1">
         </android.support.v7.widget.RecyclerView>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Dues"
+            android:padding="15dp"
+            android:textStyle="bold"
+            android:layout_gravity="bottom"
+            android:textSize="@dimen/LabelFontSize"
+            android:layout_alignParentBottom="true"
+            android:textColor="@color/red"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:layout_below="@+id/feeRecycleView">
+        <TextView
+            android:id="@+id/fee_TotalAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00.00"
+            android:padding="15dp"
+            android:textStyle="bold"
+            android:layout_gravity="bottom"
+            android:textSize="@dimen/LabelFontSize"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="100dp"
+            android:textColor="@color/red"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Total Dues"
-                android:padding="15dp"
-                android:textStyle="bold"
-                android:layout_gravity="bottom"
-                android:textSize="@dimen/LabelFontSize"
-                android:layout_alignParentBottom="true"
-                android:textColor="@color/red"/>
+        <Button
+            android:id="@+id/fee_btnPayNow"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textAllCaps="false"
+            android:background="@drawable/rounded_button_red"
+            android:textColor="@color/white"
+            android:text="Pay Now"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textSize="@dimen/ButtonFontSize"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true" />
 
-            <TextView
-                android:id="@+id/fee_TotalAmount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="00.00"
-                android:padding="15dp"
-                android:textStyle="bold"
-                android:layout_gravity="bottom"
-                android:textSize="@dimen/LabelFontSize"
-                android:layout_alignParentBottom="true"
-                android:layout_marginLeft="200dp"
-                android:textColor="@color/red"/>
-
-            <Button
-                android:id="@+id/fee_btnPayNow"
-                android:layout_width="wrap_content"
-                android:layout_height="70dp"
-                android:textAllCaps="false"
-                android:background="@drawable/rounded_button_red"
-                android:textColor="@color/white"
-                android:text="Pay Now"
-                android:paddingLeft="30dp"
-                android:paddingRight="30dp"
-                android:textSize="@dimen/ButtonFontSize"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true" />
-        </RelativeLayout>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="3% GST Included"
             android:paddingLeft="15dp"
             android:textSize="@dimen/TextBoxFontSize"
-            android:textColor="@color/red"/>
+            android:textColor="@color/red"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/layoutForTeacher">
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:id="@+id/ddlClass">
+        </Spinner>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recyclerView">
+        </android.support.v7.widget.RecyclerView>
     </LinearLayout>
+
 </LinearLayout>

@@ -224,26 +224,70 @@ public class FeeActivity  extends AppCompatActivity implements View.OnClickListe
 
             AlertDialog.Builder dialog = new AlertDialog.Builder(FeeActivity.this);
             dialog.setView(layout);
-            dialog.setTitle("Create Fine");
-            dialog.show();
+            dialog.setTitle("Create Penalty");
 
-            dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+            dialog.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(FeeActivity.this, "", Toast.LENGTH_SHORT).show();
+                    int amount = 0;
+                    try{
+                        amount = Integer.parseInt(txtAmount.getText().toString());
+                        if(amount<=0) {
+                            Toast.makeText(FeeActivity.this, "Amount must be greater than zero.", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        if(txtReason.getText().toString().trim().length()<=0) {
+                            Toast.makeText(FeeActivity.this, "Amount must be greater than zero.", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        postPenalty(amount, txtReason.getText().toString().trim(), StudentId);
+                    }
+                    catch (Exception e){
+                        Toast.makeText(FeeActivity.this, "Please enter valid amount.", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
+            dialog.show();
 
-
-//            final Dialog dialog = new Dialog(FeeActivity.this);
-//            dialog.setView(layout);;
-//            dialog.setTitle("Create Fine");
-//            dialog.show();
         } catch (Exception e) {
             e.getStackTrace();
             FirebaseCrash.report(e);
         }
 
+    }
+
+    private void postPenalty(int amount, String reason, String StudentId){
+        JSONObject params = new JSONObject();
+        JSONArray fines = new JSONArray();
+        JSONObject fine = new JSONObject();
+
+        try {
+            fine.put("name",reason);
+            fine.put("amount", amount+"");
+            fines.put(fine);
+
+            params.put("fine", fines);
+            params.put("class_id",Integer.parseInt(classId));
+            params.put("session_id", UserProfile.SessionData.Id);
+            params.put("total_amount",amount);
+            params.put("student_id", new JSONArray().put(Integer.parseInt(StudentId)));
+
+            service.MakePostRequest(Const.CREATE_PENALTY, params, this, new VolleyJsonObjectCallback() {
+                @Override
+                public void onSuccess(JSONObject result) {
+                    Toast.makeText(FeeActivity.this, "Penalty created successfully.", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onError(VolleyError error) {
+                    Toast.makeText(FeeActivity.this, R.string.serviceError, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        catch (Exception e){
+
+        }
     }
 
 

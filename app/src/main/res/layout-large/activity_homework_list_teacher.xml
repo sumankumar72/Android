@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="suman.dev.strocks.HomeworkListActivity">
+    <include layout="@layout/toolbar"/>
+
+    <include
+        android:id="@+id/userProfileHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/user_profile_header"/>
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/content_toolbar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:animateLayoutChanges="true">
+
+        <LinearLayout
+            android:id="@+id/layouthomeworks"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/lblDate"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Issue Date: "
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:clickable="true"
+                android:gravity="center|left"
+                android:textSize="@dimen/HeadingFontSize"
+                android:textStyle="bold"
+                android:drawableTint="@color/black"
+                android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp"
+                android:layout_marginBottom="5dp"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:scrollbars="vertical"
+                android:layout_height="match_parent">
+            </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:visibility="gone">
+        </android.support.v7.widget.RecyclerView>
+
+
+    </LinearLayout>
+
+</LinearLayout>

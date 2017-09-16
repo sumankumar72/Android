@@ -6,14 +6,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
@@ -22,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.google.android.gms.vision.text.Line;
 import com.google.firebase.crash.FirebaseCrash;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -75,6 +80,31 @@ public class ResultActivity extends AppCompatActivity {
         UserProfileHeader profile = new UserProfileHeader(this, findViewById(R.id.result_userProfileHeader));
         profile.loadProfile();
         context = this;
+
+        //Test
+
+//        final LinearLayout layoutLinear = (LinearLayout)findViewById(R.id.layoutLinear);
+//        TextView hello = (TextView)findViewById(R.id.hello);
+//
+//        Context context = ResultActivity.this;
+//
+//
+//        for(int i=0;i<2;i++) {
+//            LinearLayout l = (LinearLayout)View.inflate(this, R.layout.create_result_list, null);
+//            layoutLinear.addView(l);
+//        }
+//
+//        hello.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (layoutLinear.getVisibility() == View.VISIBLE)
+//                    layoutLinear.setVisibility(View.GONE);
+//                else
+//                    layoutLinear.setVisibility(View.VISIBLE);
+//            }
+//        });
+
+
         listView = (ListView) findViewById(R.id.listView);
 
         TextView content_title = (TextView) findViewById(R.id.content_toolbar_title);
@@ -167,6 +197,7 @@ public class ResultActivity extends AppCompatActivity {
 
                             UserSubjectData subjectData;
                             for(ChildModel c: students) {
+                                boolean flag = true;
                                 for (int i = 0; i < array.length(); i++) {
                                     if(c.Id==array.getJSONObject(i).getInt("student_id")) {
                                         subjectData = new UserSubjectData();
@@ -177,37 +208,12 @@ public class ResultActivity extends AppCompatActivity {
                                         subjectData.Grade = array.getJSONObject(i).getString("grade");
                                         subjectData.Review = array.getJSONObject(i).getString("review");
                                         c.Subjects.add(subjectData);
+                                        if(subjectData.MarksObtained.isEmpty())
+                                            flag = false;
                                     }
                                 }
+                                c.ResultCompleted=flag;
                             }
-                /*
-                    for(int i=0;i<array.length();i++){
-
-                        JSONObject studentJson =array.getJSONObject(i).getJSONObject("student");
-                       child =  new ChildModel(
-                               studentJson.getString("user_token"),
-                               studentJson.getString("first_name"),
-                               studentJson.getString("middle_name"),
-                               studentJson.getString("last_name")
-                        );
-                        JSONArray subjects = studentJson.getJSONArray("student_class_subject_data");
-                        UserSubjectData subjectData;
-                        for(int j=0;j<subjects.length();j++){
-                            subjectData=new UserSubjectData();
-                            subjectData.Id = subjects.getJSONObject(j).getInt("id");
-                            subjectData.Name = subjects.getJSONObject(j).getString("name");
-                            boolean flag= false;
-                            for(UserSubjectData d: UserProfile.TeacherSubjects){
-                                if(!d.is_class_teacher.isEmpty() && d.is_class_teacher.equals("Yes") && d.Id==subjectData.Id ){
-                                    flag = true;
-                                    break;
-                                }
-                            }
-                            if(flag)
-                                child.Subjects.add(subjectData);
-                        }
-                        students.add(child);
-                    }*/
                             setAdapter(students);
                         } catch (Exception e) {
                             e.getStackTrace();

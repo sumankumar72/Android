@@ -50,6 +50,7 @@
             android:background="@drawable/rounded_button"
             android:textColor="@color/white"
             android:textSize="@dimen/TextBoxFontSize"
+            android:visibility="invisible"
             android:layout_marginTop="30dp"/>
 
         <Button
@@ -63,6 +64,7 @@
             android:background="@drawable/rounded_button"
             android:textColor="@color/white"
             android:textSize="@dimen/TextBoxFontSize"
+            android:visibility="invisible"
             android:layout_marginTop="5dp"/>
 
         <Button

@@ -5,16 +5,23 @@
 
     <item android:id="@+id/nav_switch_user"
         android:title="Switch User"
-        app:showAsAction="ifRoom"
+        app:showAsAction="withText|ifRoom"
         android:visible="false"
         android:icon="@drawable/ic_action_switch_user">
     </item>
 
     <item android:id="@+id/nav_switch_add"
         android:title="Post New"
-        app:showAsAction="ifRoom|withText"
+        app:showAsAction="withText|ifRoom"
         android:visible="false"
         android:icon="@drawable/ic_action_nav_add">
     </item>
+    <item android:id="@+id/nav_view_btn"
+        android:title="View"
+        app:showAsAction="ifRoom|withText"
+        android:icon="@mipmap/ic_view"
+        android:visible="false">
+    </item>
+
 
 </menu>

@@ -4,6 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 import suman.dev.strocks.Model.ChildModel;
 import suman.dev.strocks.Model.ItemClickListener;
 import suman.dev.strocks.Model.PTAForumComment;
+import suman.dev.strocks.Model.UserSubjectData;
 import suman.dev.strocks.R;
 
 /**
@@ -54,10 +57,14 @@ public class AttandanceAdapter extends RecyclerView.Adapter<AttandanceAdapter.Vi
             holder.rdbPresent.setChecked(false);
             holder.rdbAbsent.setChecked(true);
         }
+        if(model.ResultCompleted)
+            holder.txtName.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_result_completed, 0);
 
         if(!IsAttendance) {
             holder.rdbPresentAbsent.setVisibility(View.GONE);
         }
+
+
     }
 
     @Override
@@ -69,6 +76,8 @@ public class AttandanceAdapter extends RecyclerView.Adapter<AttandanceAdapter.Vi
         public TextView txtName;
         public RadioGroup rdbPresentAbsent;
         public RadioButton rdbPresent,rdbAbsent;
+        public LinearLayout layoutLinear;
+
         public View view;
 
         public ViewHolder(View v){
@@ -78,12 +87,16 @@ public class AttandanceAdapter extends RecyclerView.Adapter<AttandanceAdapter.Vi
             rdbPresentAbsent = (RadioGroup)view.findViewById(R.id.rdbPresentAbsent);
             rdbPresent = (RadioButton)view.findViewById(R.id.rdbPresent);
             rdbAbsent = (RadioButton)view.findViewById(R.id.rdbAbsent);
+
             rdbPresentAbsent.setVisibility(View.VISIBLE);
+
 
             rdbPresent.setOnClickListener(this);
             rdbAbsent.setOnClickListener(this);
             txtName.setOnClickListener(this);
             v.setOnClickListener(this);
+
+
         }
 
         @Override

@@ -46,15 +46,15 @@
 
         <Button
             android:id="@+id/btnHomework"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:textAllCaps="false"
             android:background="@drawable/circle_button"
             android:text="Homework"
             android:textSize="@dimen/ButtonFontSize"
             android:paddingTop="5dp"
             android:drawableTop="@drawable/reading1_black"
-            android:drawablePadding="-25dp"
+            android:drawablePadding="-20dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="8dp"
@@ -63,8 +63,8 @@
 
         <Button
             android:id="@+id/btnSyllabus"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:textAllCaps="false"
             android:background="@drawable/circle_button"
             android:text="Syllabus"
@@ -72,7 +72,7 @@
             android:layout_marginLeft="8dp"
             android:paddingTop="5dp"
             android:drawableTop="@drawable/syllabus_black"
-            android:drawablePadding="-25dp"
+            android:drawablePadding="-20dp"
 
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
@@ -84,15 +84,15 @@
 
         <Button
             android:id="@+id/btnEvents"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:textAllCaps="false"
             android:textSize="@dimen/ButtonFontSize"
             android:background="@drawable/circle_button"
             android:text="Events"
             android:paddingTop="5dp"
             android:drawableTop="@drawable/tent_black"
-            android:drawablePadding="-25dp"
+            android:drawablePadding="-20dp"
             android:layout_marginTop="8dp"
             android:layout_marginRight="8dp"
             app:layout_constraintRight_toRightOf="parent"
@@ -101,15 +101,15 @@
 
         <Button
             android:id="@+id/btnAttandance"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:textAllCaps="false"
             android:background="@drawable/circle_button"
             android:text="Attendance"
             android:paddingTop="5dp"
             android:textSize="@dimen/ButtonFontSize"
             android:drawableTop="@drawable/user_queue_black"
-            android:drawablePadding="-25dp"
+            android:drawablePadding="-20dp"
             android:layout_marginTop="8dp"
             android:layout_marginLeft="8dp"
             app:layout_constraintTop_toBottomOf="@+id/btnHomework"
@@ -118,14 +118,14 @@
 
         <Button
             android:id="@+id/btnResult"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:textAllCaps="false"
             android:background="@drawable/circle_button"
             android:text="Result"
             android:paddingTop="5dp"
             android:drawableTop="@drawable/syllabus_black"
-            android:drawablePadding="-25dp"
+            android:drawablePadding="-20dp"
             android:textSize="@dimen/ButtonFontSize"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
@@ -138,8 +138,8 @@
 
         <Button
             android:id="@+id/btnTimeTable"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:textAllCaps="false"
             android:background="@drawable/circle_button"
             android:text="Time Table"
@@ -150,13 +150,13 @@
             app:layout_constraintRight_toRightOf="parent"
             android:paddingTop="5dp"
             android:drawableTop="@drawable/time_table_black"
-            android:drawablePadding="-25dp"
+            android:drawablePadding="-20dp"
             android:layout_marginEnd="8dp" />
 
         <Button
             android:id="@+id/btnFees"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:textAllCaps="false"
             android:background="@drawable/circle_button"
             android:text="Fees"
@@ -167,19 +167,19 @@
             android:paddingTop="5dp"
             android:textSize="@dimen/ButtonFontSize"
             android:drawableTop="@drawable/rupee_black"
-            android:drawablePadding="-25dp"
+            android:drawablePadding="-20dp"
             android:layout_marginStart="8dp" />
 
         <Button
             android:id="@+id/btnPTAForum"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:textAllCaps="false"
             android:background="@drawable/circle_button"
             android:text="PTA Forum"
             android:paddingTop="5dp"
             android:drawableTop="@drawable/chat_black"
-            android:drawablePadding="-25dp"
+            android:drawablePadding="-20dp"
             android:layout_marginTop="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
@@ -192,8 +192,8 @@
 
         <Button
             android:id="@+id/btnHolidayList"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:textAllCaps="false"
             android:text="Holiday List"
             android:layout_marginTop="8dp"
@@ -203,7 +203,7 @@
             android:background="@drawable/circle_button"
             android:paddingTop="5dp"
             android:drawableTop="@drawable/holiday_black"
-            android:drawablePadding="-25dp"
+            android:drawablePadding="-20dp"
             android:layout_marginEnd="8dp"
             android:textSize="@dimen/ButtonFontSize"/>
 

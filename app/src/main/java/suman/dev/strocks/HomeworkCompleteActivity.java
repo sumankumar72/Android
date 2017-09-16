@@ -70,11 +70,6 @@ public class HomeworkCompleteActivity extends AppCompatActivity {
     private Button btnCreateHomework;
     private String selectedClassId="";
 
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,37 +87,37 @@ public class HomeworkCompleteActivity extends AppCompatActivity {
         txtNote = (EditText) findViewById(R.id.txtNote);
         btnAttach = (FloatingActionButton) findViewById(R.id.btnAttach);
         SubjectId = getIntent().getIntExtra("SubjectId", 0);
+        try {
+            if (UserProfile.Role.toLowerCase().equals("teacher")) {
+                selectedClassId = getIntent().getStringExtra("classId");
+                btnAttach.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        FilePickerBuilder.getInstance().setMaxCount(1).enableDocSupport(true).pickFile(HomeworkCompleteActivity.this);
+                    }
+                });
 
-        if (UserProfile.Role.toLowerCase().equals("teacher")) {
-            selectedClassId = getIntent().getStringExtra("classId");
-            btnAttach.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    FilePickerBuilder.getInstance().setMaxCount(1).enableDocSupport(true).pickFile(HomeworkCompleteActivity.this);
-                }
-            });
+                btnCreateHomework.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        createHomework();
+                    }
+                });
 
-            btnCreateHomework.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    createHomework();
-                }
-            });
+            } else {
+                ScrollView uploadHomeworl = (ScrollView) findViewById(R.id.uploadHomeworl);
+                uploadHomeworl.setVisibility(View.VISIBLE);
+                btnCreateHomework.setVisibility(View.GONE);
+                txtNote.setVisibility(View.GONE);
+                btnAttach.setVisibility(View.GONE);
+                getHomework(SubjectId);
+            }
 
-        } else {
-            ScrollView uploadHomeworl = (ScrollView) findViewById(R.id.uploadHomeworl);
-            uploadHomeworl.setVisibility(View.VISIBLE);
-            btnCreateHomework.setVisibility(View.GONE);
-            txtNote.setVisibility(View.GONE);
-            btnAttach.setVisibility(View.GONE);
-            getHomework(SubjectId);
+
+            checkPermission();
+        }catch (Exception e){
+            String ex = e.getMessage();
         }
-
-
-        checkPermission();
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
 
@@ -260,6 +255,10 @@ public class HomeworkCompleteActivity extends AppCompatActivity {
             Toast.makeText(HomeworkCompleteActivity.this, "Please enter note!!!", Toast.LENGTH_SHORT).show();
             return;
         }
+        if(file==null){
+            Toast.makeText(HomeworkCompleteActivity.this, "Please select file!!!", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("file_url", getBase64());
@@ -283,6 +282,10 @@ public class HomeworkCompleteActivity extends AppCompatActivity {
     private void createHomework(){
         if (txtNote.getText().toString().trim().length() <= 0) {
             Toast.makeText(HomeworkCompleteActivity.this, "Please enter note!!!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(file==null){
+            Toast.makeText(HomeworkCompleteActivity.this, "Please select file!!!", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -341,43 +344,5 @@ public class HomeworkCompleteActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return byteArray;
-    }
-
-
-
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    public Action getIndexApiAction() {
-        Thing object = new Thing.Builder()
-                .setName("HomeworkComplete Page") // TODO: Define a title for the content shown.
-                // TODO: Make sure this auto-generated URL is correct.
-                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
-                .build();
-        return new Action.Builder(Action.TYPE_VIEW)
-                .setObject(object)
-                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
-                .build();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        AppIndex.AppIndexApi.start(client, getIndexApiAction());
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        AppIndex.AppIndexApi.end(client, getIndexApiAction());
-        client.disconnect();
     }
 }

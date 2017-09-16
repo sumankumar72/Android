@@ -5,12 +5,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import suman.dev.strocks.Adapters.HomeworkAdapter;
 import suman.dev.strocks.Model.HomeworkClickListener;
+import suman.dev.strocks.Model.HomeworkList;
 import suman.dev.strocks.Model.ItemClickListener;
 import suman.dev.strocks.Model.UserProfile;
 import suman.dev.strocks.Model.UserSubjectData;
@@ -71,7 +74,6 @@ public class HomeworkActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-
     private void bindHomework()
     {
 
@@ -103,12 +105,27 @@ public class HomeworkActivity extends AppCompatActivity implements View.OnClickL
                 }
                 else
                 {
-                    intent = new Intent(HomeworkActivity.this, HomeworkCompleteActivity.class);
-                    intent.putExtra("SubjectId", subject.Id);
-                    if(selectedClassId>0)
-                     intent.putExtra("classId", selectedClassId+"");
-
-                    startActivity(intent);
+                    //if(view.getId()==R.id.homework_list_btnCreate) {
+                    if(view.getId()==R.id.homework_list_btnView && !UserProfile.Role.toLowerCase().equals("teacher")){
+                        intent = new Intent(HomeworkActivity.this, HomeworkCompleteActivity.class);
+                        intent.putExtra("SubjectId", subject.Id);
+                        if (selectedClassId > 0)
+                            intent.putExtra("classId", selectedClassId + "");
+                        startActivity(intent);
+                    }
+                    else if(view.getId()==R.id.homework_list_btnCreate){
+                        intent = new Intent(HomeworkActivity.this, HomeworkCompleteActivity.class);
+                        intent.putExtra("SubjectId", subject.Id);
+                        if (selectedClassId > 0)
+                            intent.putExtra("classId", selectedClassId + "");
+                        startActivity(intent);
+                    }
+                    else if(view.getId()==R.id.homework_list_btnView && UserProfile.Role.toLowerCase().equals("teacher")) {
+                        Intent intent = new Intent(HomeworkActivity.this, HomeworkListActivity.class);
+                        intent.putExtra("SubjectId", subject.Id+"");
+                        intent.putExtra("classId", selectedClassId + "");
+                        startActivity(intent);
+                    }
                 }
             }
         });

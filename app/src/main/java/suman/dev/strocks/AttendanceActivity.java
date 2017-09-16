@@ -251,34 +251,62 @@ public class AttendanceActivity extends AppCompatActivity {
     //This function execute when user loggedin as Teacher Role
     private void loadStudents(){
         students= new ArrayList<>();
-        service.MakeGetRequest(String.format(Const.GET_STUDENTS_FOR_ATTENDANCE, classId, UserProfile.UserToken, selectedDate), AttendanceActivity.this, new VolleyJsonObjectCallback() {
-            @Override
-            public void onSuccess(JSONObject result) {
-                try{
-                    JSONArray array = result.getJSONArray("data");
-                    ChildModel student;
-                    for(int i=0;i<array.length();i++){
-                        student = new ChildModel(array.getJSONObject(i).getString("student_id"), array.getJSONObject(i).getString("student_name"), "", "");
-                        if(array.getJSONObject(i).getString("attendance").toLowerCase().equals("present"))
-                            student.IsPresent=true;
-                        else
-                            student.IsPresent=false;
+        if(!selectedDate.equals(sdf.format(new Date()))) {
+            service.MakeGetRequest(String.format(Const.GET_STUDENTS_FOR_ATTENDANCE, classId, UserProfile.UserToken, selectedDate), AttendanceActivity.this, new VolleyJsonObjectCallback() {
+                @Override
+                public void onSuccess(JSONObject result) {
+                    try {
+                        JSONArray array = result.getJSONArray("data");
+                        ChildModel student;
+                        for (int i = 0; i < array.length(); i++) {
+                            student = new ChildModel(array.getJSONObject(i).getString("student_id"), array.getJSONObject(i).getString("student_name"), "", "");
+                            if (array.getJSONObject(i).getString("attendance").toLowerCase().equals("present"))
+                                student.IsPresent = true;
+                            else
+                                student.IsPresent = false;
 
-                        students.add(student);
+                            students.add(student);
 
+                        }
+                        setAdapter(students);
+                    } catch (Exception e) {
+                        e.getStackTrace();
                     }
-                    setAdapter(students);
                 }
-                catch (Exception e){
-                    e.getStackTrace();
-                }
-            }
 
-            @Override
-            public void onError(VolleyError error) {
-                String s = "";
-            }
-        });
+                @Override
+                public void onError(VolleyError error) {
+                    String s = "";
+                }
+            });
+        }
+        else{
+            service.MakeGetRequest(String.format(Const.GET_STUDENT_BY_CLASS, UserProfile.SessionData.Id, classId), AttendanceActivity.this, new VolleyJsonObjectCallback() {
+                @Override
+                public void onSuccess(JSONObject result) {
+                    try{
+                        JSONArray array = result.getJSONArray("data");
+                        for(int i=0;i<array.length();i++){
+                            students.add(new ChildModel(
+                                    array.getJSONObject(i).getJSONObject("student").getString("user_token"),
+                                    array.getJSONObject(i).getJSONObject("student").getString("first_name"),
+                                    array.getJSONObject(i).getJSONObject("student").getString("middle_name"),
+                                    array.getJSONObject(i).getJSONObject("student").getString("last_name")
+                            ));
+                        }
+                        setAdapter(students);
+                    }
+                    catch (Exception e){
+                        e.getStackTrace();
+                    }
+                }
+
+                @Override
+                public void onError(VolleyError error) {
+                    String s = "";
+                }
+            });
+        }
     }
 
     private void setAdapter(final ArrayList<ChildModel> students)

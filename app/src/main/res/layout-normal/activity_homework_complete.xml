@@ -34,25 +34,23 @@
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:text="Post"
             android:background="@drawable/rounded_button_red"
             android:textColor="@color/white"
             android:id="@+id/btnCreateHomework"
-            android:textSize="@dimen/ButtonFontSize"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginRight="100dp"/>
+            android:layout_marginRight="60dp"/>
 
         <android.support.design.widget.FloatingActionButton
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:src="@drawable/ic_attachment"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:elevation="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"
             android:id="@+id/btnAttach"/>
 
 

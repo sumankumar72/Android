@@ -9,7 +9,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="130dp"
         android:scaleType="fitCenter"
         android:background="@color/backgroundColor"
         android:src="@drawable/logo"/>
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="130dp"
         android:padding="20dp">
         <TextView
             android:layout_width="match_parent"
@@ -42,7 +42,7 @@
         <Button
             android:id="@+id/btnLoginAsAdmin"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:textAlignment="center"
             android:text="Login as Administrator"
             android:textStyle="normal"
@@ -51,12 +51,12 @@
             android:textColor="@color/white"
             android:textSize="@dimen/TextBoxFontSize"
             android:visibility="invisible"
-            android:layout_marginTop="40dp"/>
+            android:layout_marginTop="10dp"/>
 
         <Button
             android:id="@+id/btnLoginAsPrinciple"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:textAlignment="center"
             android:text="Login as Principle"
             android:textStyle="normal"
@@ -65,12 +65,12 @@
             android:textColor="@color/white"
             android:textSize="@dimen/TextBoxFontSize"
             android:visibility="invisible"
-            android:layout_marginTop="15dp"/>
+            android:layout_marginTop="5dp"/>
 
         <Button
             android:id="@+id/btnLoginAsTeacher"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:textAlignment="center"
             android:text="Login as Teacher"
             android:textStyle="normal"
@@ -78,12 +78,12 @@
             android:background="@drawable/rounded_button"
             android:textColor="@color/white"
             android:textSize="@dimen/TextBoxFontSize"
-            android:layout_marginTop="15dp"/>
+            android:layout_marginTop="5dp"/>
 
         <Button
             android:id="@+id/btnLoginAsStudent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:textAlignment="center"
             android:text="Login as Student"
             android:textStyle="normal"
@@ -91,12 +91,12 @@
             android:background="@drawable/rounded_button"
             android:textColor="@color/white"
             android:textSize="@dimen/TextBoxFontSize"
-            android:layout_marginTop="15dp"/>
+            android:layout_marginTop="5dp"/>
 
         <Button
             android:id="@+id/btnLoginAsParents"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:textAlignment="center"
             android:text="Login as Parents"
             android:textStyle="normal"
@@ -104,7 +104,7 @@
             android:background="@drawable/rounded_button"
             android:textColor="@color/white"
             android:textSize="@dimen/TextBoxFontSize"
-            android:layout_marginTop="15dp"/>
+            android:layout_marginTop="5dp"/>
 
     </LinearLayout>
 

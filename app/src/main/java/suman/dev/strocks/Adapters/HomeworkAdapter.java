@@ -30,7 +30,7 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.ViewHo
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView homework_list_submissiondate,homework_list_subjectName;
-        public Button homework_list_btnView;
+        public Button homework_list_btnView,homework_list_btnCreate;
         public View view;
 
         public ViewHolder(View v)
@@ -39,16 +39,23 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.ViewHo
             view  = v;
             homework_list_submissiondate = (TextView) itemView.findViewById(R.id.homework_list_submissiondate);
             homework_list_subjectName = (TextView) itemView.findViewById(R.id.homework_list_subjectName);
-            homework_list_btnView= (Button) itemView.findViewById(R.id.homework_list_btnView);
+            homework_list_btnView = (Button) itemView.findViewById(R.id.homework_list_btnView);
+            homework_list_btnCreate = (Button) itemView.findViewById(R.id.homework_list_btnCreate);
             homework_list_btnView.setOnClickListener(this);
-            if(UserProfile.Role.toLowerCase().equals("teacher"))
-                homework_list_btnView.setText("Create");
+            homework_list_btnCreate.setOnClickListener(this);
+
+            if(UserProfile.Role.toLowerCase().equals("teacher")) {
+                //homework_list_btnView.setText("Create");
+                homework_list_btnCreate.setVisibility(View.VISIBLE);
+                homework_list_btnView.setWidth(160);
+            }
+
         }
 
         @Override
         public void onClick(View v) {
             if (clickListener != null)
-                clickListener.onClick(view, UserProfile.SubjectData.get(getAdapterPosition()));
+                clickListener.onClick(v, UserProfile.SubjectData.get(getAdapterPosition()));
         }
     }
 
