@@ -23,13 +23,29 @@
         android:layout_height="match_parent"
         android:padding="10dp">
 
+        <TextView
+            android:id="@+id/lblEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="End Date:"
+            android:textSize="@dimen/LabelFontSize"
+            android:textStyle="bold"
+            android:padding="5dp"
+            android:gravity="center|left"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:clickable="true"
+            android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp"/>
+
         <EditText
             android:id="@+id/txtNote"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="top|left"
             android:hint="Enter your note here...."
-            android:layout_above="@+id/btnAttach"/>
+            android:layout_above="@+id/btnAttach"
+            android:layout_below="@+id/lblEndDate"/>
+
 
 
         <Button

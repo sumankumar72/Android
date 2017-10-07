@@ -1,9 +1,13 @@
 package suman.dev.strocks;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -13,6 +17,7 @@ import android.util.Base64;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
@@ -34,8 +39,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import droidninja.filepicker.FilePickerBuilder;
@@ -69,7 +78,8 @@ public class HomeworkCompleteActivity extends AppCompatActivity {
     private FloatingActionButton btnAttach;
     private Button btnCreateHomework;
     private String selectedClassId="";
-
+    private String endDate="";
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,8 +97,40 @@ public class HomeworkCompleteActivity extends AppCompatActivity {
         txtNote = (EditText) findViewById(R.id.txtNote);
         btnAttach = (FloatingActionButton) findViewById(R.id.btnAttach);
         SubjectId = getIntent().getIntExtra("SubjectId", 0);
+        final TextView lblEndDate = (TextView)findViewById(R.id.lblEndDate);
         try {
             if (UserProfile.Role.toLowerCase().equals("teacher")) {
+
+                endDate=sdf.format(new Date());
+                lblEndDate.setText("End Date: "+ endDate);
+
+                final Calendar calendar = Calendar.getInstance();
+                final DatePickerDialog.OnDateSetListener date =  new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                        calendar.set(Calendar.YEAR, year);
+                        calendar.set(Calendar.MONTH, month);
+                        calendar.set(Calendar.DAY_OF_MONTH, day);
+                        endDate=sdf.format(calendar.getTime());
+                        lblEndDate.setText("End Date: "+ endDate);
+                    }
+                };
+
+
+                final DatePickerDialog datePicker = new DatePickerDialog(HomeworkCompleteActivity.this, date, calendar
+                        .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH));
+
+                datePicker.getDatePicker().setMaxDate(System.currentTimeMillis());
+
+                lblEndDate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        datePicker.show();
+                    }
+                });
+
+
                 selectedClassId = getIntent().getStringExtra("classId");
                 btnAttach.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -107,6 +149,7 @@ public class HomeworkCompleteActivity extends AppCompatActivity {
             } else {
                 ScrollView uploadHomeworl = (ScrollView) findViewById(R.id.uploadHomeworl);
                 uploadHomeworl.setVisibility(View.VISIBLE);
+                lblEndDate.setVisibility(View.GONE);
                 btnCreateHomework.setVisibility(View.GONE);
                 txtNote.setVisibility(View.GONE);
                 btnAttach.setVisibility(View.GONE);
@@ -294,8 +337,8 @@ public class HomeworkCompleteActivity extends AppCompatActivity {
         params.put("subject_id",SubjectId+"");
         params.put("teacher_id",UserProfile.UserToken);
         params.put("class_id",selectedClassId);
-        params.put("issue_date","01-08-2017");
-        params.put("end_date","01-10-2017");
+        params.put("issue_date",sdf.format(new Date()));
+        params.put("end_date",endDate);
         params.put("teacher_note", txtNote.getText().toString().trim());
         params.put("file_url", getBase64());
 
@@ -345,4 +388,6 @@ public class HomeworkCompleteActivity extends AppCompatActivity {
         }
         return byteArray;
     }
+
+
 }

@@ -1,12 +1,18 @@
 package suman.dev.strocks;
 
 import android.app.DatePickerDialog;
+import android.app.DownloadManager;
+import android.content.Context;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
@@ -27,6 +33,7 @@ import java.util.Locale;
 
 import suman.dev.strocks.Adapters.HomeworkListAdapter;
 import suman.dev.strocks.Adapters.HomeworkListStudentsAdapter;
+import suman.dev.strocks.Common.Common;
 import suman.dev.strocks.Constant.Const;
 import suman.dev.strocks.Model.HomeworkList;
 import suman.dev.strocks.Model.ItemClickListener;
@@ -162,14 +169,19 @@ public class HomeworkListActivity extends AppCompatActivity {
         adapter.setClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position) {
-                layouthomeworks.setVisibility(View.GONE);
-                recyclerView1.setVisibility(View.VISIBLE);
+                if(view.getId()==R.id.lblFileUrl){
+                    downloadFile(homeworks.get(position).FileUrl);
+                }
+                else {
+                    layouthomeworks.setVisibility(View.GONE);
+                    recyclerView1.setVisibility(View.VISIBLE);
 
-                recyclerView1.setHasFixedSize(true);
-                layoutManager1 = new LinearLayoutManager(HomeworkListActivity.this);
-                recyclerView1.setLayoutManager(layoutManager1);
-                adapter1 = new HomeworkListStudentsAdapter(homeworks.get(position));
-                recyclerView1.setAdapter(adapter1);
+                    recyclerView1.setHasFixedSize(true);
+                    layoutManager1 = new LinearLayoutManager(HomeworkListActivity.this);
+                    recyclerView1.setLayoutManager(layoutManager1);
+                    adapter1 = new HomeworkListStudentsAdapter(homeworks.get(position));
+                    recyclerView1.setAdapter(adapter1);
+                }
             }
         });
     }
@@ -183,5 +195,38 @@ public class HomeworkListActivity extends AppCompatActivity {
         else
             super.onBackPressed();
 
+    }
+
+    public void downloadFile(String DownloadUrl){
+        try {
+            String FileName = "";
+
+            Uri uri=null;
+            try{
+                DownloadUrl = Const.BASE_URL+"/school/"+DownloadUrl;
+                uri = Uri.parse(DownloadUrl);
+                FileName =DownloadUrl.substring(DownloadUrl.lastIndexOf('/')+1);
+            }catch (Exception e){
+
+            }
+            DownloadManager.Request r = new DownloadManager.Request(uri);
+            // This put the download in the same Download dir the browser uses
+            r.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, FileName);
+
+            // When downloading music and videos they will be listed in the player
+            // (Seems to be available since Honeycomb only)
+            r.allowScanningByMediaScanner();
+
+            // Notify user when download is completed
+            // (Seems to be available since Honeycomb only)
+            r.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+
+            // Start download
+            DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+            dm.enqueue(r);
+        }
+        catch (Exception e){
+            Toast.makeText(this, "An error occured while download file!!!", Toast.LENGTH_SHORT).show();
+        }
     }
 }

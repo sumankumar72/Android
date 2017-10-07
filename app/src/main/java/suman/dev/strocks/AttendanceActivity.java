@@ -96,8 +96,8 @@ public class AttendanceActivity extends AppCompatActivity {
             selectedDate=sdf.format(new Date());
             lblDate.setText("Date: "+ selectedDate);
             loadStudents();
-            final Calendar calendar = Calendar.getInstance();
 
+            final Calendar calendar = Calendar.getInstance();
             final DatePickerDialog.OnDateSetListener date =  new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker datePicker, int year, int month, int day) {

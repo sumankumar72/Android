@@ -3,6 +3,7 @@ package suman.dev.strocks;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -75,6 +76,15 @@ public class FeeActivity  extends AppCompatActivity implements View.OnClickListe
     private AttandanceAdapter studentAdapter;
     private ArrayList<ChildModel> students;
 
+
+    private Dialog dialog;
+    private EditText txtReason;
+    private EditText txtAmount;
+    private TextInputLayout layoutReason;
+    private TextInputLayout layoutAmount;
+    private Button btnSubmit;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +95,7 @@ public class FeeActivity  extends AppCompatActivity implements View.OnClickListe
 
         if(UserProfile.Role.toLowerCase().equals("teacher")){
             intiLayoutForTeacher();
+            initDialog();
         }
         else {
             initLayoutForStudent();
@@ -207,44 +218,49 @@ public class FeeActivity  extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    private void initDialog(){
+        dialog = new Dialog(FeeActivity.this);
+        dialog.setContentView(R.layout.create_penalty_dialog);
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.gravity = Gravity.CENTER;
+        lp.windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setAttributes(lp);
+        txtReason = (EditText)dialog.findViewById(R.id.txtReason);
+        txtAmount = (EditText)dialog.findViewById(R.id.txtAmount);
+        layoutReason = (TextInputLayout)dialog.findViewById(R.id.input_layout_reason);
+        layoutAmount = (TextInputLayout)dialog.findViewById(R.id.input_layout_amount);
+        btnSubmit = (Button)dialog.findViewById(R.id.btnSubmit);
+
+    }
+
     private void createFeeDialog(final String StudentId){
         try {
-            LinearLayout layout = new LinearLayout(FeeActivity.this);
-            layout.setOrientation(LinearLayout.VERTICAL);
+            txtAmount.setText("");
+            txtReason.setText("");
+            layoutAmount.setError("");
+            layoutReason.setError("");
 
-            final EditText txtReason = new EditText(FeeActivity.this);
-            txtReason.setHint("Reason");
-            layout.addView(txtReason);
-
-            final EditText txtAmount = new EditText(FeeActivity.this);
-            txtAmount.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
-            txtAmount.setHint("Amount");
-            layout.addView(txtAmount);
-
-
-            AlertDialog.Builder dialog = new AlertDialog.Builder(FeeActivity.this);
-            dialog.setView(layout);
-            dialog.setTitle("Create Penalty");
-
-
-            dialog.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+            btnSubmit.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    int amount = 0;
+                public void onClick(View view) {
+                    if(txtReason.getText().toString().trim().isEmpty()){
+                        layoutReason.setError("Penalty reason is required!");
+                        return;
+                    }
+                    if(txtAmount.getText().toString().trim().isEmpty()){
+                        layoutAmount.setError("Penalty amount is required!");
+                        return;
+                    }
                     try{
-                        amount = Integer.parseInt(txtAmount.getText().toString());
-                        if(amount<=0) {
-                            Toast.makeText(FeeActivity.this, "Amount must be greater than zero.", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        if(txtReason.getText().toString().trim().length()<=0) {
-                            Toast.makeText(FeeActivity.this, "Amount must be greater than zero.", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        postPenalty(amount, txtReason.getText().toString().trim(), StudentId);
+                       float amount = Float.parseFloat(txtAmount.getText().toString().trim());
+                        postPenalty(amount, txtReason.getText().toString().trim(), StudentId, dialog);
                     }
                     catch (Exception e){
-                        Toast.makeText(FeeActivity.this, "Please enter valid amount.", Toast.LENGTH_SHORT).show();
+                        layoutAmount.setError("Penalty amount is invalid!");
+                        return;
                     }
                 }
             });
@@ -257,7 +273,7 @@ public class FeeActivity  extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void postPenalty(int amount, String reason, String StudentId){
+    private void postPenalty(float amount, String reason, String StudentId, final Dialog dialog){
         JSONObject params = new JSONObject();
         JSONArray fines = new JSONArray();
         JSONObject fine = new JSONObject();
@@ -271,12 +287,13 @@ public class FeeActivity  extends AppCompatActivity implements View.OnClickListe
             params.put("class_id",Integer.parseInt(classId));
             params.put("session_id", UserProfile.SessionData.Id);
             params.put("total_amount",amount);
-            params.put("student_id", new JSONArray().put(Integer.parseInt(StudentId)));
+            params.put("student_id", new JSONArray().put(StudentId));
 
             service.MakePostRequest(Const.CREATE_PENALTY, params, this, new VolleyJsonObjectCallback() {
                 @Override
                 public void onSuccess(JSONObject result) {
                     Toast.makeText(FeeActivity.this, "Penalty created successfully.", Toast.LENGTH_SHORT).show();
+                    dialog.hide();
                 }
 
                 @Override

@@ -35,7 +35,7 @@ public class HomeworkListAdapter extends RecyclerView.Adapter<HomeworkListAdapte
     @Override
     public void onBindViewHolder(HomeworkListAdapter.ViewHolder holder, int position) {
         HomeworkList m = dataSet.get(position);
-        holder.lblFileUrl.setText(m.FileUrl);
+        holder.lblFileUrl.setText(m.FileUrl.substring(m.FileUrl.lastIndexOf('/')+1));
         holder.lblEndDate.setText("End Date: "+m.EndDate);
         holder.lblTeacherNote.setText(m.TeacherNote);
     }
@@ -57,6 +57,7 @@ public class HomeworkListAdapter extends RecyclerView.Adapter<HomeworkListAdapte
             lblFileUrl = (TextView)itemView.findViewById(R.id.lblFileUrl);
             lblTeacherNote = (TextView)itemView.findViewById(R.id.lblTeacherNote);
             itemView.setOnClickListener(this);
+            lblFileUrl.setOnClickListener(this);
         }
 
         @Override

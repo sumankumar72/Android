@@ -82,7 +82,11 @@
                 android:text="Student Name:"
                 android:layout_weight="1"
                 android:padding="5dp"
-                android:textSize="@dimen/LabelFontSize"/>
+                android:textSize="@dimen/LabelFontSize"
+                android:gravity="center|left"
+                android:drawableRight="@mipmap/ic_download"
+                android:clickable="true"
+                android:drawableTint="@color/colorPrimary"/>
         </LinearLayout>
 
         <LinearLayout
